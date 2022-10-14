@@ -2,10 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 21px 70px 0;
-  margin-bottom: 93px;
+  padding-top: 21px;
+  padding-bottom: 93px;
   background-color: #073042;
-  ;
 }
 
 .header__logo {
@@ -17,7 +16,12 @@
   background-size: cover;
   border-radius: 20%;
   border: none;
+  transition: opacity .5s ease-in-out;
+}
 
+.header__logo:hover {
+  opacity: .7;
+  cursor: pointer;
 }
 
 .header__links {
@@ -32,7 +36,6 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
-  color: #FFFFFF;
   text-decoration: none;
 }
 
@@ -42,4 +45,24 @@
   background-color: #2BE080;
   border-radius: 3px;
   border: none;
+  transition: opacity .5s ease-in-out;
+}
+
+.header__link-btn:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+.header__link_text_black {
+  color: black;
+}
+
+.header__link_text_white {
+  transition: opacity .5s ease-in-out;
+  color: #FFFFFF;
+}
+
+.header__link_text_white:hover {
+  cursor: pointer;
+  opacity: .7;
 }
