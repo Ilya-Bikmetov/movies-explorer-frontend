@@ -1,13 +1,13 @@
 .promo {
   display: flex;
   justify-content: space-between;
+  padding: 0 70px 0;
   background-color: #073042;
 }
 
 .promo__titles {
   display: flex;
   flex-direction: column;
-  z-index: 2;
 }
 
 .promo__title {
@@ -44,7 +44,6 @@
   background-image: url(../../../images/promo_logo.svg);
   background-repeat: no-repeat;
   background-size: contain;
-  z-index: 0;
 }
 
 .promo__btn {
