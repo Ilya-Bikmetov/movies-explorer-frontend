@@ -1,12 +1,11 @@
 .about-me {
-  padding: 110px 70px;
+  padding: 110px 70px 0;
 }
 
 .about-me__container {
   display: flex;
-  gap: 270px;
+  justify-content: space-between;
   padding-top: 66px;
-  padding-bottom: 100px;
 }
 
 .about-me__info {
@@ -16,6 +15,7 @@
   width: 100%;
   max-width: 600px;
 }
+
 .about-me__job {
   font-family: 'Inter';
   font-style: normal;
