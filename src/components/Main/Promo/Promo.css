@@ -47,6 +47,9 @@
 }
 
 .promo__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   max-width: 129px;
   min-height: 36px;
@@ -64,6 +67,7 @@
   margin-bottom: 75px;
   padding: 0;
   transition: opacity .5s ease-in-out;
+  text-decoration: none;
 }
 
 .promo__btn:hover {

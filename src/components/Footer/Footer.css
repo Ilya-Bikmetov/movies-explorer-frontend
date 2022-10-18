@@ -42,4 +42,12 @@
   font-size: 13px;
   line-height: 16px;
   margin: 0;
+  text-decoration: none;
+  color: black;
+  transition: opacity .5s ease-in-out;
+}
+
+.footer__link:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }

@@ -4,7 +4,7 @@ function Header() {
   return (
     <header className="header">
       <button
-        className="header__logo"
+        className="logo"
         type="button"
         aria-label="Открыть меню"
       />
