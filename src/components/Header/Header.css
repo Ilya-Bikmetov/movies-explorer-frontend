@@ -38,16 +38,19 @@
   text-decoration: none;
 }
 
-.header__link-btn {
+.header__link_btn {
+  display: flex;
   width: 76px;
   height: 32px;
   background-color: #2BE080;
   border-radius: 3px;
   border: none;
   transition: opacity .5s ease-in-out;
+  justify-content: center;
+  align-items: center;
 }
 
-.header__link-btn:hover {
+.header__link_btn:hover {
   cursor: pointer;
   opacity: .7;
 }

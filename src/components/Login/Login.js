@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 function Login() {
   return (
     <>
       <form className="profile-form">
-        <div className="logo logo_login" />
+        <Link to={"./"} className="logo logo_login" />
         <h1 className="profile-form__title">Рады видеть!</h1>
+        <p className="profile-form__input-title">E-mail</p>
         <input
           className="profile-form__input"
           name="email"
@@ -18,6 +20,10 @@ function Login() {
           required
         />
         <button className="profile-form__btn" type="submit" aria-label="Войти">Войти</button>
+        <div className="profile-form__subtitle-container">
+          <p className="profile-form__submit-subtitle">Ещё не зарегистрированы?</p>
+          <Link to={"./signin"} className="profile-form__submit-subtitle_link">Регистрация</Link>
+        </div>
       </form>
     </>
   );

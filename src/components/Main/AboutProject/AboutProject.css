@@ -64,13 +64,13 @@
 
 .about-project__cell_small {
   width: 100%;
-  max-width: 228px;
+  max-width: 20%;
   background-color: #2BE080;
 }
 
 .about-project__cell_big {
   width: 100%;
-  max-width: 912px;
+  max-width: 80%;
   background-color: #F2F2F2;
 }
 

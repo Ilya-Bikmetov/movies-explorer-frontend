@@ -9,14 +9,9 @@ function Header() {
         aria-label="Открыть меню"
       />
       <nav className="header__links">
-        <Link className="header__link header__link_text_white" to={"./sign-up"}>Регистрация</Link>
-        <button
-          className="header__link-btn"
-          type="button"
-          aria-label="Войти"
-          >
-          <Link className="header__link header__link_text_black" to={"./sign-in"}>Войти</Link>
-        </button>
+        <Link className="header__link header__link_text_white" to={"./signup"}>Регистрация</Link>
+        <Link className="header__link header__link_text_black header__link_btn" to={"./signin"}>Войти</Link>
+
       </nav>
     </header>
 

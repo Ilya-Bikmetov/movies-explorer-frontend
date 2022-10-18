@@ -14,7 +14,7 @@ function App() {
           <Main />
           <Footer />
         </Route>
-        <Route path="/sign-in">
+        <Route path="/signin">
         <Login />
         </Route>
       </Switch>
