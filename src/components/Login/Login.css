@@ -85,7 +85,7 @@
   margin-top: 16px;
 }
 
-.profile-form__submit-subtitle_link {
+.subtitle-link {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -97,7 +97,7 @@
   text-decoration: none;
 }
 
-.profile-form__submit-subtitle_link:hover {
+.subtitle-link:hover {
   cursor: pointer;
   opacity: 0.6;
 }

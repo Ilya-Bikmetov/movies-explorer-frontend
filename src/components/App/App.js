@@ -3,7 +3,9 @@ import './App.css';
 import Header from '../Header/Header.js';
 import Main from '../Main/Main.js';
 import Footer from '../Footer/Footer.js';
-import Login from '../Login/Login.js'
+import Login from '../Login/Login.js';
+import Register from '../Register/Register.js';
+import NotFound from '../NotFound/NotFound.js';
 
 function App() {
   return (
@@ -14,8 +16,23 @@ function App() {
           <Main />
           <Footer />
         </Route>
+        <Route path="/movies">
+          <Header />
+        </Route>
+        <Route path="/saved-movies">
+          <Header />
+        </Route>
+        <Route path="/profile">
+          <Header />
+        </Route>
         <Route path="/signin">
-        <Login />
+          <Login />
+        </Route>
+        <Route path="/signup">
+          <Register />
+        </Route>
+        <Route path="*">
+          <NotFound />
         </Route>
       </Switch>
     </div>
