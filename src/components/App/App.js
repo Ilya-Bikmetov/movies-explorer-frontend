@@ -6,6 +6,7 @@ import Footer from '../Footer/Footer.js';
 import Login from '../Login/Login.js';
 import Register from '../Register/Register.js';
 import NotFound from '../NotFound/NotFound.js';
+import Profile from '../Profile/Profile.js';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         </Route>
         <Route path="/profile">
           <Header />
+          <Profile />
         </Route>
         <Route path="/signin">
           <Login />
