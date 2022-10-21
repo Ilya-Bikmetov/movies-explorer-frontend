@@ -7,6 +7,7 @@ import Login from '../Login/Login.js';
 import Register from '../Register/Register.js';
 import NotFound from '../NotFound/NotFound.js';
 import Profile from '../Profile/Profile.js';
+import SearchForm from '../SearchForm/SearchForm.js';
 
 function App() {
   return (
@@ -19,9 +20,12 @@ function App() {
         </Route>
         <Route path="/movies">
           <Header />
+          <SearchForm />
+          <Footer />
         </Route>
         <Route path="/saved-movies">
           <Header />
+          <Footer />
         </Route>
         <Route path="/profile">
           <Header />

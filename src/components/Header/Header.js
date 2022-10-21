@@ -4,7 +4,6 @@ function Header() {
   const location = useLocation();
 
   return (
-    // <header className="header">
     <header className={`header ${location.pathname !== "/" && 'header_main'}`}>
       {location.pathname === "/" &&
         <>
