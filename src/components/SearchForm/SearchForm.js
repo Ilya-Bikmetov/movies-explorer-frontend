@@ -19,7 +19,7 @@ function SearchForm() {
           <p className="search-form__text">Короткометражки</p>
         </form>
       </div>
-
+      <div className="search-form__line" />
     </section>
   );
 }
