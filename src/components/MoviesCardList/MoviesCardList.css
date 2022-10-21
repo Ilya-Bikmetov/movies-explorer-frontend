@@ -1,0 +1,13 @@
+.movies {
+  padding: 70px 70px 80px;
+}
+
+.movies__list {
+  grid-template-columns: repeat(auto-fit, minmax(364px, 1fr));
+  justify-items: center;
+  list-style-type: none;
+  column-gap: 24px;
+  row-gap: 37px;
+  margin: 0;
+  padding: 0;
+}

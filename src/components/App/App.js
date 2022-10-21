@@ -8,6 +8,8 @@ import Register from '../Register/Register.js';
 import NotFound from '../NotFound/NotFound.js';
 import Profile from '../Profile/Profile.js';
 import SearchForm from '../SearchForm/SearchForm.js';
+import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
+// import Preloader from '../Preloader/Preloader.js';
 
 function App() {
   return (
@@ -21,10 +23,13 @@ function App() {
         <Route path="/movies">
           <Header />
           <SearchForm />
+          {/* <Preloader /> */}
+          <MoviesCardList />
           <Footer />
         </Route>
         <Route path="/saved-movies">
           <Header />
+          <SearchForm />
           <Footer />
         </Route>
         <Route path="/profile">

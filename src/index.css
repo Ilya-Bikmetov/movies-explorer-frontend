@@ -13,3 +13,6 @@
 @import url(./components/Profile/Profile.css);
 @import url(./components/NotFound/NotFound.css);
 @import url(./components/SearchForm/SearchForm.css);
+@import url(./components/Preloader/Preloader.css);
+@import url(./components/MoviesCardList/MoviesCardList.css);
+@import url(./components/MoviesCardList/MoviesCard/MoviesCard.css);

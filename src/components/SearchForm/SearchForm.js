@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 function SearchForm() {
   return (
     <section className="search-form">
