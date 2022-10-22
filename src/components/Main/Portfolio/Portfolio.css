@@ -11,19 +11,27 @@
   font-size: 18px;
   line-height: 20px;
   color: #A0A0A0;
-  margin: 0 0 50px 0;
+  margin: 0 0 47px 0;
 }
 
 .portfolio__set {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 14px;
 }
 
 .portfolio__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: opacity .5s ease-in-out;
+  text-decoration: none;
+  color: black;
+}
+
+.portfolio__container:hover {
+  opacity: .5;
+  cursor: pointer;
 }
 
 .portfolio__title {
@@ -37,16 +45,17 @@
 }
 
 .portfolio__arrow {
-  width: 29px;
+  width: 18px;
   height: 60px;
   background-image: url(../../../images/portfolio_arrow.svg);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  transition: opacity .5s ease-in-out;
+  margin-right: 5px;
 }
 
-.portfolio__arrow:hover {
-  opacity: .5;
-  cursor: pointer;
+
+.portfolio__line {
+  height: 1px;
+  background-color: #E8E8E8;
 }
