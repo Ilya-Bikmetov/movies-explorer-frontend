@@ -1,24 +1,22 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Header() {
-  const location = useLocation();
 
   return (
-    <header className={`header ${location.pathname !== "/" && 'header_main'}`}>
-      {location.pathname === "/" &&
-        <>
-          <div
-            className="logo"
-            type="button"
-            aria-label="Открыть меню"
-          />
-          <nav className="header__links">
-            <Link className="header__link header__link_text_white" to={"./signup"}>Регистрация</Link>
-            <Link className="header__link header__link_text_black header__link_btn" to={"./signin"}>Войти</Link>
-          </nav>
-        </>
-      }
-      {location.pathname !== "/" &&
+    <header className="header">
+      <>
+        <div
+          className="logo"
+          type="button"
+          aria-label="Открыть меню"
+        />
+        <nav className="header__links">
+          <Link className="header__link header__link_text_white" to={"./signup"}>Регистрация</Link>
+          <Link className="header__link header__link_text_black header__link_btn" to={"./signin"}>Войти</Link>
+        </nav>
+      </>
+
+      {/* {location.pathname !== "/" &&
         <>
           <div className="header-container">
             <Link to={"/"}
@@ -38,7 +36,7 @@ function Header() {
             </Link>
           </nav>
         </>
-      }
+      } */}
     </header>
 
   );

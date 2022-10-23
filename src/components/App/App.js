@@ -8,6 +8,7 @@ import Register from '../Register/Register.js';
 import NotFound from '../NotFound/NotFound.js';
 import Profile from '../Profile/Profile.js';
 import SearchForm from '../SearchForm/SearchForm.js';
+import Navigation from '../Navigation/Navigation.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 // import Preloader from '../Preloader/Preloader.js';
 
@@ -21,19 +22,19 @@ function App() {
           <Footer />
         </Route>
         <Route path="/movies">
-          <Header />
+          <Navigation />
           <SearchForm />
           {/* <Preloader /> */}
           <MoviesCardList />
           <Footer />
         </Route>
         <Route path="/saved-movies">
-          <Header />
+          <Navigation />
           <SearchForm />
           <Footer />
         </Route>
         <Route path="/profile">
-          <Header />
+          <Navigation />
           <Profile />
         </Route>
         <Route path="/signin">
