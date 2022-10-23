@@ -1,5 +1,5 @@
 .movies {
-  padding: 70px 70px 80px;
+  padding: 70px 70px 85px;
 }
 
 .movies__list {
@@ -8,7 +8,7 @@
   justify-items: center;
   list-style-type: none;
   column-gap: 24px;
-  row-gap: 37px;
+  row-gap: 39px;
   margin: 0;
   padding: 0;
 }
@@ -29,7 +29,7 @@
   background-color: transparent;
   border: 1px solid #E8E8E8;
   border-radius: 3px;
-  margin: 50px auto 0;
+  margin: 62px auto 0;
   align-self: center;
   padding: 0;
   transition: opacity .5s ease-in-out;

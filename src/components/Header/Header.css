@@ -8,7 +8,7 @@
 
 .header_main {
   background-color: white;
-  padding: 21px 70px 70px;
+  padding: 17px 70px 89px;
 }
 
 .logo {
@@ -35,7 +35,7 @@
 .header__links {
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 16px;
 }
 
 .header__link {

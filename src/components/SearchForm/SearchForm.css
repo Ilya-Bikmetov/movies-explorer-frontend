@@ -18,7 +18,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  margin: 0 10px 0 19px;
+  margin: 0 20px 0 30px;
 }
 
 .form-movies {
@@ -44,7 +44,7 @@
   background-position: center;
   margin-right: 16px;
   margin-left: 46px;
-  padding-right: 29px;
+  padding-right: 56px;
   border: none;
   border-radius: 48px;
   transition: opacity .5s ease-in-out;

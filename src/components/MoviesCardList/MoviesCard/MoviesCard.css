@@ -17,7 +17,7 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin: 16px;
+  margin: 18px 25px 13px 16px;
 }
 
 .movie__title {
@@ -26,6 +26,7 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
+  margin: 0;
 }
 
 .movie__like {
