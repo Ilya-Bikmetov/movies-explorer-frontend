@@ -144,3 +144,18 @@
   line-height: 16px;
   color: black;
 }
+
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .header {
+    padding: 19px 30px 157px;
+  }
+
+  .header__links {
+    gap: 30px;
+  }
+
+  .header__br {
+    display: none;
+  }
+}

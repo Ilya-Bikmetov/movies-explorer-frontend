@@ -25,6 +25,7 @@ function Register() {
           type="password"
           required
         />
+        <p className="profile-form__error">Что-то пошло не так...</p>
         <button className="profile-form__btn profile-form__btn_signup " type="submit" aria-label="Войти">Зарегистрироваться</button>
         <div className="profile-form__subtitle-container">
           <p className="profile-form__submit-subtitle">Уже зарегистрированы?</p>

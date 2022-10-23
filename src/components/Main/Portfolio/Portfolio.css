@@ -59,3 +59,18 @@
   height: 1px;
   background-color: #E8E8E8;
 }
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .portfolio {
+    padding: 90px 50px 87px;
+  }
+
+  .portfolio__title {
+    font-size: 28px;
+    line-height: 50px;
+  }
+
+  .portfolio__set {
+    gap: 15px;
+  }
+}

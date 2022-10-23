@@ -57,3 +57,34 @@
   background-color: #E8E8E8;
   border-radius: 10px;
 }
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .techs {
+    padding: 90px 50px;
+  }
+
+  .techs__signs {
+    margin-top: 80px;
+    margin-bottom: 83px;
+  }
+
+  .techs__text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    margin: 22px 0 0 0;
+  }
+
+  .techs__item {
+    max-width: 84px;
+    min-height: 57px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

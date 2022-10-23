@@ -51,3 +51,9 @@
   opacity: 0.5;
   cursor: pointer;
 }
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .footer {
+    padding: 74px 30px 87px;
+  }
+}

@@ -59,4 +59,40 @@
   width: 100%;
   max-width: 270px;
   min-height: 327px;
+  border-radius: 10px;
+}
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .about-me {
+    padding: 90px 50px 0;
+  }
+
+  .main__title_about-me {
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .about-me__job {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 18px 0 19px;
+  }
+
+  .about-me__photo {
+    max-width: 255px;
+    min-height: 307px;
+  }
+  .about-me__text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    max-width: 364px;
+    min-height: 108px;
+  }
+
+  .about-me__hub {
+    margin: 87px 0 0 0;
+  }
 }

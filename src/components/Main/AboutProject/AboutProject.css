@@ -80,3 +80,27 @@
   color: #A0A0A0;
   margin-top: 4px;
 }
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .about-project {
+    padding: 91px 50px 83px;
+  }
+
+  .about-project__subtitles {
+    gap: 29px;
+    margin-bottom: 92px;
+  }
+
+  .about-project__text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 22px 0 0 0;
+  }
+
+  .about-project__cell_small {
+    max-width: 21%;
+  }
+}
