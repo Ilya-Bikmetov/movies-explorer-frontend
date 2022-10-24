@@ -6,11 +6,6 @@
   background-color: #073042;
 }
 
-/* .header_main {
-  background-color: white;
-  padding: 17px 70px 89px;
-} */
-
 .logo {
   display: block;
   width: 38px;
@@ -72,70 +67,6 @@
 .header-container {
   display: flex;
 }
-
-/* .nav-link {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 18px;
-  text-decoration: none;
-  color: black;
-  transition: opacity .5s ease-in-out;
-}
-
-.nav-link:hover {
-  cursor: pointer;
-  opacity: .6;
-}
-
-.nav-link_active {
-  text-decoration: underline;
-} */
-
-/* .icon-container {
-  width: 26px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #F9F9F9;
-  border-radius: 4px;
-}
-
-.icon-account {
-  width: 12px;
-  height: 14px;
-  background-image: url(../../images/account_icon.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.icon-link {
-  width: 100%;
-  max-width: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 17px;
-  text-decoration: none;
-  transition: opacity .5s ease-in-out;
-}
-
-.icon-link:hover {
-  cursor: pointer;
-  opacity: .6;
-}
-
-.icon-sign {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
-  color: black;
-} */
-
 
 @media (min-width: 400px) and (max-width: 790px) {
   .header {

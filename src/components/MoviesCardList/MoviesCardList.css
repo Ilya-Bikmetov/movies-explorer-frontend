@@ -39,3 +39,19 @@
   cursor: pointer;
   opacity: 0.6;
 }
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .movies {
+    padding: 70px 30px 85px;
+  }
+
+  .movies__list {
+    grid-template-columns: repeat(auto-fit, minmax(339px, 1fr));
+    column-gap: 30px;
+    row-gap: 29px;
+  }
+
+  .movies__btn {
+    margin: 79px auto 0;
+  }
+}

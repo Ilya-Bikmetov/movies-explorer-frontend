@@ -56,3 +56,21 @@
   padding: 0 0 16px 16px;
   margin: 0;
 }
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .movies {
+    padding: 70px 30px 85px;
+  }
+
+  .movie__photo {
+    height: 190px;
+  }
+
+  .movie__sign {
+    margin: 14px 21px 16px 14px;
+  }
+
+  .movie__duration {
+    padding: 0 0 14px 14px;
+  }
+}

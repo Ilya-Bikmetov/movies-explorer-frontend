@@ -20,6 +20,9 @@ function Navigation() {
         </div>
       </Link>
     </nav>
+    <div className="navigation__btn">
+      <div className="navigation__btn__element" />
+    </div>
   </section>
   );
 }
