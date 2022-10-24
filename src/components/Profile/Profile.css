@@ -73,3 +73,19 @@
   border: none;
   text-align: right;
 }
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .profile-form_profile {
+    margin: 156px auto 0;
+    max-width: 410px;
+  }
+
+  .profile-form__title_profile {
+    margin: 0px 0 95px;
+  }
+
+  .profile-form__profile-subtitle_btn {
+    margin-top: 206px;
+  }
+
+}

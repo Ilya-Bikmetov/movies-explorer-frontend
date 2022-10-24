@@ -117,3 +117,9 @@
   align-self: flex-start;
   margin: 10px 0 0 0;
 }
+
+@media (min-width: 400px) and (max-width: 790px) {
+  .profile-form {
+    margin: 231px auto 0;
+  }
+}

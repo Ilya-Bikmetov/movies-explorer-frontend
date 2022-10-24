@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 function Profile() {
-    const name = 'Илья';
+    const name = 'Виталий';
     const email = 'pochta@yandex.ru'
     return (
       <>
         <form className="profile-form profile-form_profile">
-          <h1 className="profile-form__title profile-form__title_profile">Привет, Илья</h1>
+          <h1 className="profile-form__title profile-form__title_profile">Привет, Виталий</h1>
           <div className="profile-container">
             <div className="profile-line profile-line_border-bottom">
               <p className="profile-name profile-name_bottom-line">Имя</p>
