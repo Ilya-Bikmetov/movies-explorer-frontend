@@ -1,6 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
 
-function Navigation() {
+function Navigation({onOpen}) {
+  const openPanel = () => {
+    onOpen();
+  }
+
   return (
   <section className="navigation">
     <div className="navigation-container">
@@ -20,9 +24,9 @@ function Navigation() {
         </div>
       </Link>
     </nav>
-    <div className="navigation__btn">
+    <button onClick={openPanel}  type="button" aria-label="Открыть панель" className="navigation__btn">
       <div className="navigation__btn__element" />
-    </div>
+    </button>
   </section>
   );
 }

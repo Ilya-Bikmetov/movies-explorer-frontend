@@ -1,4 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 import Header from '../Header/Header.js';
 import Main from '../Main/Main.js';
@@ -10,9 +11,17 @@ import Profile from '../Profile/Profile.js';
 import SearchForm from '../SearchForm/SearchForm.js';
 import Navigation from '../Navigation/Navigation.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
+import NavPanel from '../NavPanel/NavPanel.js';
 // import Preloader from '../Preloader/Preloader.js';
 
 function App() {
+
+  const [isNavPanelOpen, setNavPanelOpen] = useState(false);
+
+  const closeNavPanel = () => setNavPanelOpen(false);
+  const openNavPanel = () => setNavPanelOpen(true);
+
+
   return (
     <div className="page">
       <Switch>
@@ -22,19 +31,26 @@ function App() {
           <Footer />
         </Route>
         <Route path="/movies">
-          <Navigation />
+          <Navigation
+          onOpen={openNavPanel}
+          />
           <SearchForm />
           {/* <Preloader /> */}
           <MoviesCardList />
           <Footer />
         </Route>
         <Route path="/saved-movies">
-          <Navigation />
+          <Navigation
+            onOpen={openNavPanel}
+          />
           <SearchForm />
+          <MoviesCardList />
           <Footer />
         </Route>
         <Route path="/profile">
-          <Navigation />
+          <Navigation
+            onOpen={openNavPanel}
+          />
           <Profile />
         </Route>
         <Route path="/signin">
@@ -47,6 +63,10 @@ function App() {
           <NotFound />
         </Route>
       </Switch>
+      <NavPanel
+        onClose={closeNavPanel}
+        isOpen={isNavPanelOpen}
+      />
     </div>
   );
 }
