@@ -1,12 +1,14 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 function Navigation({onOpen}) {
+  const location = useLocation();
+
   const openPanel = () => {
     onOpen();
   }
 
   return (
-  <section className="navigation">
+  <section className={`navigation ${location.pathname === "/profile" && 'navigation_profile'}`}>
     <div className="navigation-container">
       <Link to={"/"}
         className="logo logo_movies"

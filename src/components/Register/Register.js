@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 function Register() {
   return (
-    <>
+    <div className="container">
       <form className="profile-form">
         <Link to={"/"} className="logo logo_login" />
         <h1 className="profile-form__title">Добро пожаловать!</h1>
@@ -32,7 +32,7 @@ function Register() {
           <Link to={"./signin"} className="subtitle-link">Войти</Link>
         </div>
       </form>
-    </>
+    </div>
   );
 }
 

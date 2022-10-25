@@ -26,10 +26,6 @@
   background: transparent;
 }
 
-.profile-form_profile {
-  margin-top: 3px;
-}
-
 .profile-form__title_profile {
   align-self: center;
   margin: 0 0 123px;
@@ -76,7 +72,7 @@
 
 @media (min-width: 400px) and (max-width: 911px) {
   .profile-form_profile {
-    margin: 156px auto 0;
+    margin: 0 auto 0;
     max-width: 410px;
   }
 

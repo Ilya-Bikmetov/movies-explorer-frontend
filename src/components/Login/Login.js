@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 function Login() {
   return (
-    <>
+    <div className="container">
       <form className="profile-form">
         <Link to={"/"} className="logo logo_login" />
         <h1 className="profile-form__title">Рады видеть!</h1>
@@ -25,7 +25,7 @@ function Login() {
           <Link to={"./signup"} className="subtitle-link">Регистрация</Link>
         </div>
       </form>
-    </>
+    </div>
   );
 }
 
