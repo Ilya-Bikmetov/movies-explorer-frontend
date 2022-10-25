@@ -60,7 +60,7 @@
   background-color: #E8E8E8;
 }
 
-@media (min-width: 400px) and (max-width: 911px) {
+@media (min-width: 513px) and (max-width: 911px) {
   .portfolio {
     padding: 90px 50px 87px;
   }
@@ -72,5 +72,30 @@
 
   .portfolio__set {
     gap: 15px;
+  }
+}
+
+@media (min-width: 301px) and (max-width: 512px) {
+  .portfolio {
+    padding: 70px 14px;
+  }
+
+  .portfolio__sign {
+    font-size: 14px;
+    margin: 0 0 40px 0;
+  }
+
+  .portfolio__set {
+    gap: 20px;
+  }
+
+  .portfolio__title {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__arrow {
+    width: 12px;
+    height: 24px;
   }
 }
