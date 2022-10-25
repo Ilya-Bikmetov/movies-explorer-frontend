@@ -92,7 +92,7 @@
   color: black;
 }
 
-@media (min-width: 400px) and (max-width: 790px) {
+@media (min-width: 400px) and (max-width: 911px) {
   .navigation {
     padding: 18px 30px 98px;
   }

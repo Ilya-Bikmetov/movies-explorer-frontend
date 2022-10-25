@@ -60,7 +60,7 @@
   background-color: #E8E8E8;
 }
 
-@media (min-width: 400px) and (max-width: 790px) {
+@media (min-width: 400px) and (max-width: 911px) {
   .portfolio {
     padding: 90px 50px 87px;
   }

@@ -74,7 +74,7 @@
   text-align: right;
 }
 
-@media (min-width: 400px) and (max-width: 790px) {
+@media (min-width: 400px) and (max-width: 911px) {
   .profile-form_profile {
     margin: 156px auto 0;
     max-width: 410px;

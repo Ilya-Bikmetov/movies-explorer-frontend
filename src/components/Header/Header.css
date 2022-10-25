@@ -68,7 +68,7 @@
   display: flex;
 }
 
-@media (min-width: 400px) and (max-width: 790px) {
+@media (min-width: 400px) and (max-width: 911px) {
   .header {
     padding: 19px 30px 157px;
   }

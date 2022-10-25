@@ -62,7 +62,7 @@
   border-radius: 10px;
 }
 
-@media (min-width: 400px) and (max-width: 790px) {
+@media (min-width: 400px) and (max-width: 911px) {
   .about-me {
     padding: 90px 50px 0;
   }

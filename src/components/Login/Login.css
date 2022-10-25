@@ -118,7 +118,7 @@
   margin: 10px 0 0 0;
 }
 
-@media (min-width: 400px) and (max-width: 790px) {
+@media (min-width: 400px) and (max-width: 911px) {
   .profile-form {
     margin: 231px auto 0;
   }

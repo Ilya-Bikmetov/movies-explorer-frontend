@@ -52,7 +52,7 @@
   cursor: pointer;
 }
 
-@media (min-width: 400px) and (max-width: 790px) {
+@media (min-width: 400px) and (max-width: 911px) {
   .footer {
     padding: 74px 30px 87px;
   }

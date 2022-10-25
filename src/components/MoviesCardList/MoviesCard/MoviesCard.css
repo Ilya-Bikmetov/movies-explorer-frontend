@@ -57,7 +57,7 @@
   margin: 0;
 }
 
-@media (min-width: 400px) and (max-width: 790px) {
+@media (min-width: 400px) and (max-width: 911px) {
   .movies {
     padding: 70px 30px 85px;
   }
