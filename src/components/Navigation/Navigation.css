@@ -158,3 +158,20 @@
     display: flex;
   }
 }
+
+@media (min-width: 301px) and (max-width: 512px) {
+  .navigation {
+    padding: 18px 14px;
+  }
+
+  .navigation__links {
+    display: none;
+  }
+  .navigation__btn {
+    width: 40px;
+    display: flex;
+  }
+  .navigation__btn__element {
+    width: 22px;
+  }
+}

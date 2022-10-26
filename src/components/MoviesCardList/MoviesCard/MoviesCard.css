@@ -57,7 +57,7 @@
   margin: 0;
 }
 
-@media (min-width: 400px) and (max-width: 911px) {
+@media (min-width: 513px) and (max-width: 911px) {
   .movies {
     padding: 70px 30px 85px;
   }
@@ -72,5 +72,31 @@
 
   .movie__duration {
     padding: 0 0 14px 14px;
+  }
+}
+
+@media (min-width: 301px) and (max-width: 512px) {
+  .movie__photo {
+    height: 168px;
+  }
+
+  .movie__sign {
+    margin: 14px 20px 14px 14px;
+  }
+
+  .movie__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .movie__duration {
+    font-size: 10px;
+    line-height: 12px;
+    padding: 0 0 18px 14px;
+  }
+
+  .movies__btn {
+    margin: 71px auto 0;
+    max-width: 240px;
   }
 }

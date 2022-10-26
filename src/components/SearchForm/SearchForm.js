@@ -18,6 +18,12 @@ function SearchForm() {
           <p className="search-form__text">Короткометражки</p>
         </form>
       </div>
+      <div className="search-form__swtich-container">
+        <button className="switcher switcher_mobile" type="button" aria-label="Переключатель">
+          <div className="switcher__circle" />
+        </button>
+        <p className="search-form__text search-form__text_mobile">Короткометражки</p>
+      </div>
       <div className="search-form__line" />
     </section>
   );
