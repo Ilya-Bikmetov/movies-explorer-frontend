@@ -30,7 +30,7 @@
 }
 
 .movie__like {
-  width: 14px;
+  width: 15px;
   height: 12px;
   background-image: url(../../../images/like_active.svg);
   background-repeat: no-repeat;
@@ -39,6 +39,7 @@
   margin: 0;
   padding: 0;
   border: none;
+  background-color: transparent;
 }
 
 .movie__like:hover {

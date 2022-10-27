@@ -1,3 +1,11 @@
 .profile-form__btn_signup {
   margin-top: 69px;
 }
+
+@media (min-width: 301px) and (max-width: 512px) {
+  .profile-form__btn_signup {
+    margin-top: 157px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

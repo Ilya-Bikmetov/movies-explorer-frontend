@@ -47,6 +47,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  background-color: transparent;
   margin-right: 16px;
   margin-left: 46px;
   padding-right: 56px;
@@ -69,6 +70,7 @@
 .switcher {
   display: flex;
   width: 100%;
+  background-color: #2BE080;
   max-width: 36px;
   min-height: 20px;
   border-radius: 20px;

@@ -72,3 +72,18 @@
   border-bottom: 2px solid black;
   padding-bottom: 2px;
 }
+
+@media (min-width: 301px) and (max-width: 512px) {
+  .nav-panel__close-btn {
+    margin: 18px 14px 0 0;
+  }
+
+  .nav-panel__links {
+
+    margin-top: 143px;
+  }
+
+  .icon-link_nav-panel {
+    padding-bottom: 55px;
+}
+}
