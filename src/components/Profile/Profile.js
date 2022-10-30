@@ -1,6 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 function Profile() {
-  const location = useLocation();
   const name = 'Виталий';
   const email = 'pochta@yandex.ru'
   return (

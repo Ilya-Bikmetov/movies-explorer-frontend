@@ -32,7 +32,7 @@
 .movie__like {
   width: 15px;
   height: 12px;
-  background-image: url(../../../images/like_active.svg);
+  background-image: url(../../../images/like.svg);
   background-repeat: no-repeat;
   background-size: cover;
   transition: opacity .5s ease-in-out;
@@ -42,9 +42,41 @@
   background-color: transparent;
 }
 
+.movie__like_active {
+  background-image: url(../../../images/like_active.svg);
+}
+
 .movie__like:hover {
   cursor: pointer;
   opacity: 0.6;
+}
+
+.movie__delete {
+  display: none;
+  width: 7px;
+  height: 7px;
+  background-image: url(../../../images/delete_movie_icon.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: opacity .5s ease-in-out;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.movie__delete_active {
+  display: block;
+  transition: opacity .5s ease-in-out;
+}
+
+.movie__delete_active:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.movie__sign_saved:hover {
+  cursor: pointer;
 }
 
 .movie__duration {

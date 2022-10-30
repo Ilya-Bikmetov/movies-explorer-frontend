@@ -34,10 +34,11 @@
   width: 100%;
   color: #A0A0A0;
   min-height: 46px;
-  padding: 0;
+  padding: 15px;
   background: #F9F9F9;
   border-radius: 8px;
   border: none;
+  box-sizing: border-box;
 }
 
 .profile-form__btn {
@@ -160,3 +161,4 @@
   }
 
 }
+

@@ -92,6 +92,7 @@
 @media (min-width: 301px) and (max-width: 512px) {
   .techs {
     padding: 70px 18px;
+    background-color: white;
   }
 
   .main-title {

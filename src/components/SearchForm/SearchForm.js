@@ -1,4 +1,16 @@
+import { useState } from 'react';
+
 function SearchForm() {
+  const [isSwitchOn, setSwitchCondition] = useState(false);
+
+  const changeSwitchCondition = () => {
+    if (isSwitchOn) {
+      setSwitchCondition(false);
+    }else {
+      setSwitchCondition(true);
+    }
+  }
+
   return (
     <section className="search-form">
       <div className="search-form__container">
@@ -12,7 +24,7 @@ function SearchForm() {
           />
           <button className="search-form__button" type="submit" aria-label="Поиск фильмов" />
           <div className="search-form__separator" />
-          <button className="switcher" type="button" aria-label="Переключатель">
+          <button onClick={changeSwitchCondition} className={`switcher ${isSwitchOn && 'switcher_on'}`} type="button" aria-label="Переключатель">
             <div className="switcher__circle" />
           </button>
           <p className="search-form__text">Короткометражки</p>
