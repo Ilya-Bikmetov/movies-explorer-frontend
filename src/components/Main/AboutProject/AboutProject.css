@@ -1,0 +1,159 @@
+.about-project {
+  padding: 110px 70px 100px;
+}
+
+.section-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  color: #000000;
+  margin: 0;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #000000;
+}
+
+.about-project__subtitles {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+  gap: 40px;
+  margin-bottom: 110px;
+}
+
+.about-project__subtitle {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  color: #000000;
+  margin: 0;
+}
+
+.about-project__text {
+  width: 100%;
+  max-width: 550px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 26px 0 0 0;
+}
+
+.about-project__scale {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.about-project__cell {
+  min-height: 36px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-project__cell_small {
+  width: 100%;
+  max-width: 20%;
+  background-color: #2BE080;
+}
+
+.about-project__cell_big {
+  width: 100%;
+  max-width: 80%;
+  background-color: #F2F2F2;
+}
+
+.about-project__cell_nocolor {
+  background-color: transparent;
+  color: #A0A0A0;
+  margin-top: 4px;
+}
+
+@media (min-width: 513px) and (max-width: 911px) {
+  .about-project {
+    padding: 91px 50px 83px;
+  }
+
+  .about-project__subtitles {
+    gap: 29px;
+    margin-bottom: 92px;
+  }
+
+  .about-project__text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 22px 0 0 0;
+  }
+
+  .about-project__cell_small {
+    max-width: 21%;
+  }
+}
+
+@media (min-width: 301px) and (max-width: 512px) {
+
+  .about-project {
+    padding: 70px 18px 60px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.04em;
+    padding-bottom: 27px;
+  }
+
+  .about-project__subtitles {
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 60px;
+    gap: 56px;
+    margin-bottom: 60px;
+  }
+
+  .about-project__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about-project__text {
+    font-size: 11px;
+    line-height: 16px;
+    margin: 16px 0 0 0;
+  }
+
+  .about-project__cell {
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+  }
+
+  .about-project__cell_small {
+    max-width: 35%;
+  }
+
+  .about-project__cell_nocolor {
+    font-family: 'Suisse Intl';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+    margin-top: -3px;
+  }
+}

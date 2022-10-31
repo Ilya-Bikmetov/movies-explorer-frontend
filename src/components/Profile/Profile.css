@@ -1,0 +1,130 @@
+.profile-form__links-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-form__profile-subtitle {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: black;
+  margin: 0;
+  transition: opacity .5s ease-in-out;
+}
+
+.profile-form__profile-subtitle:hover {
+  cursor: pointer;
+  opacity: .6;
+}
+
+.profile-form__profile-subtitle_link {
+  color: red;
+  text-decoration: none;
+}
+
+.profile-form__profile-subtitle_btn {
+  margin-top: 215px;
+  margin-bottom: 16px;
+  border: none;
+  background: transparent;
+}
+
+.profile-form__title_profile {
+  align-self: center;
+  margin: 0 0 123px;
+}
+
+.profile-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-line_border-bottom {
+  margin-bottom: 16px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.profile-name {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  margin: 0;
+}
+
+.profile-line__input {
+  width: 100%;
+  max-width: 122px;
+  min-height: 14px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  border: none;
+  text-align: right;
+}
+
+
+@media (min-width: 301px) and (max-width: 512px) {
+  .profile-form {
+    max-width: 260px;
+    margin-top: 57px;
+  }
+
+  .profile-form_profile {
+    margin-top: 0;
+    justify-content: flex-start;
+  }
+
+  .profile-form__title_profile {
+    margin: 68px 0 80px;
+  }
+
+  .profile-line_border-bottom {
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+  }
+
+  .profile-form__profile-subtitle {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .profile-form__profile-subtitle_btn {
+    margin-top: 375px;
+    margin-bottom: 15px;
+  }
+
+  .profile-form__profile-subtitle_link {
+    padding-bottom: 40px;
+  }
+}
+
+@media (min-width: 513px) and (max-width: 911px) {
+
+  .profile-form_profile {
+    margin: 0 auto 0;
+    max-width: 410px;
+    min-height: calc(100vh - 65px);
+  }
+
+  .profile-form__title_profile {
+    margin: 0px 0 95px;
+  }
+
+  .profile-form__profile-subtitle_btn {
+    margin-top: 206px;
+  }
+
+}
