@@ -18,7 +18,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  margin: 0 20px 0 30px;
+  margin: 0 0 0 30px;
 }
 
 .form-movies {
@@ -29,7 +29,7 @@
   width: 100%;
   color: black;
   min-height: 46px;
-  padding: 0;
+  padding: 0 20px;
   background: #F9F9F9;
   border-radius: 8px;
   border: none;
@@ -127,7 +127,7 @@
   }
 
   .search-logo {
-    margin: 0 20px 0 29px;
+    margin: 0 0 0 29px;
   }
 
   .search-form__text {
@@ -204,12 +204,12 @@
 
   .search-form__button {
     width: 50px;
-    margin: 0 0 0 46px;
+    margin: 0 0 0 16px;
     padding: 0;
   }
 
   .form-movies {
-    margin: 0 19px;
+    margin: 0 19px 0 0;
   }
 
 }

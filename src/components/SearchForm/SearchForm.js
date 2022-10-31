@@ -6,7 +6,7 @@ function SearchForm() {
   const changeSwitchCondition = () => {
     if (isSwitchOn) {
       setSwitchCondition(false);
-    }else {
+    } else {
       setSwitchCondition(true);
     }
   }
@@ -31,7 +31,7 @@ function SearchForm() {
         </form>
       </div>
       <div className="search-form__swtich-container">
-        <button className="switcher switcher_mobile" type="button" aria-label="Переключатель">
+        <button onClick={changeSwitchCondition} className={`switcher switcher_mobile ${isSwitchOn && 'switcher_on'}`} type="button" aria-label="Переключатель">
           <div className="switcher__circle" />
         </button>
         <p className="search-form__text search-form__text_mobile">Короткометражки</p>

@@ -30,11 +30,12 @@
 }
 
 .movie__like {
-  width: 15px;
+  width: 14px;
   height: 12px;
   background-image: url(../../../images/like.svg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   transition: opacity .5s ease-in-out;
   margin: 0;
   padding: 0;
@@ -53,8 +54,8 @@
 
 .movie__delete {
   display: none;
-  width: 7px;
-  height: 7px;
+  width: 9px;
+  height: 9px;
   background-image: url(../../../images/delete_movie_icon.svg);
   background-repeat: no-repeat;
   background-size: cover;
