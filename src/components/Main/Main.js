@@ -13,10 +13,29 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import Navigation from '../Navigation/Navigation.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import NavPanel from '../NavPanel/NavPanel.js';
+import * as Movies from '../../utils/MoviesApi.js';
 // import Preloader from '../Preloader/Preloader.js';
 
 function Main() {
   const [isNavPanelOpen, setNavPanelOpen] = useState(false);
+
+  const getMovies = async () => {
+    // if (typeof (moviesLoaded) === 'object') {
+
+    // } else {
+    // }
+    const movies = await Movies.getContent();
+    localStorage.setItem('movies', JSON.stringify(movies));
+  }
+
+
+
+  const findMovies = ({ movie }) => {
+    getMovies();
+    const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
+    const arrayFinded = moviesLoaded.filter(obj => obj.nameRU.replace(/ /g,'').toLowerCase().includes(movie.replace(/ /g,'').toLowerCase()));
+    console.log(arrayFinded);
+  }
 
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
@@ -34,7 +53,9 @@ function Main() {
           <Navigation
             onOpen={openNavPanel}
           />
-          <SearchForm />
+          <SearchForm
+            onSubmit={findMovies}
+          />
           {/* <Preloader /> */}
           <MoviesCardList />
         </Route>
@@ -42,7 +63,9 @@ function Main() {
           <Navigation
             onOpen={openNavPanel}
           />
-          <SearchForm />
+          <SearchForm
+            onSubmit={findMovies}
+          />
           <MoviesCardList />
         </Route>
         <Route path="/profile">

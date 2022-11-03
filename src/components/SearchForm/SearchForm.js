@@ -1,7 +1,17 @@
 import { useState } from 'react';
 
-function SearchForm() {
+function SearchForm({ onSubmit }) {
   const [isSwitchOn, setSwitchCondition] = useState(false);
+  const [inputData, setInputData] = useState({ movie: '' });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputData({
+      ...inputData,
+      [name]: value
+    });
+
+  }
 
   const changeSwitchCondition = () => {
     if (isSwitchOn) {
@@ -11,16 +21,26 @@ function SearchForm() {
     }
   }
 
+  const submitSearch = (e) => {
+    e.preventDefault();
+    onSubmit({movie: inputData.movie});
+  }
+
+
+
   return (
     <section className="search-form">
       <div className="search-form__container">
         <div className="search-logo" />
-        <form className="form-movies">
+        <form onSubmit={submitSearch} className="form-movies">
           <input
             className="search-form__input"
-            name="Фильм"
+            name="movie"
             placeholder="Фильм"
+            type="movie"
             required
+            onChange={handleInputChange}
+            value={inputData.movie}
           />
           <button className="search-form__button" type="submit" aria-label="Поиск фильмов" />
           <div className="search-form__separator" />
