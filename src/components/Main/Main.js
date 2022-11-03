@@ -15,30 +15,37 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import NavPanel from '../NavPanel/NavPanel.js';
 import * as Movies from '../../utils/MoviesApi.js';
 // import Preloader from '../Preloader/Preloader.js';
-
 function Main() {
   const [isNavPanelOpen, setNavPanelOpen] = useState(false);
 
-  const getMovies = async () => {
-    // if (typeof (moviesLoaded) === 'object') {
+  const closeNavPanel = () => setNavPanelOpen(false);
+  const openNavPanel = () => setNavPanelOpen(true);
 
-    // } else {
-    // }
+  const getMovies = async () => {
     const movies = await Movies.getContent();
     localStorage.setItem('movies', JSON.stringify(movies));
   }
-
+  getMovies();
 
 
   const findMovies = ({ movie }) => {
-    getMovies();
+    let moviesSaved = [];
+    let movieSame = false;
+
     const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
-    const arrayFinded = moviesLoaded.filter(obj => obj.nameRU.replace(/ /g,'').toLowerCase().includes(movie.replace(/ /g,'').toLowerCase()));
-    console.log(arrayFinded);
+    if (typeof (localStorage.moviesFound) !== 'undefined') {
+      moviesSaved = JSON.parse(localStorage.getItem('moviesFound'));
+      movieSame = moviesSaved.some((item) => item.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()))
+    }
+    if (!movieSame) {
+      const moviesFound = moviesLoaded.filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
+      moviesFound.forEach((item) => moviesSaved.push(item))
+      if (moviesFound.length > 0) {
+        localStorage.setItem('moviesFound', JSON.stringify(moviesSaved));
+      }
+    }
   }
 
-  const closeNavPanel = () => setNavPanelOpen(false);
-  const openNavPanel = () => setNavPanelOpen(true);
   return (
     <div>
       <Switch>
