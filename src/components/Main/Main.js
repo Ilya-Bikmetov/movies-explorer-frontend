@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Switch } from "react-router-dom";
 import Promo from "./Promo/Promo.js";
 import AboutProject from "./AboutProject/AboutProject.js";
@@ -14,24 +14,24 @@ import Navigation from '../Navigation/Navigation.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import NavPanel from '../NavPanel/NavPanel.js';
 import * as Movies from '../../utils/MoviesApi.js';
-// import Preloader from '../Preloader/Preloader.js';
+import Preloader from '../Preloader/Preloader.js';
+
 function Main() {
+  let moviesSaved = [];
+  const [cards, setCards] = useState([]);
+  const [isPreloaderOn, setPreloaderState] = useState(false);
   const [isNavPanelOpen, setNavPanelOpen] = useState(false);
 
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
 
+
   const getMovies = async () => {
     const movies = await Movies.getContent();
     localStorage.setItem('movies', JSON.stringify(movies));
   }
-  getMovies();
-
-
   const findMovies = ({ movie }) => {
-    let moviesSaved = [];
     let movieSame = false;
-
     const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
     if (typeof (localStorage.moviesFound) !== 'undefined') {
       moviesSaved = JSON.parse(localStorage.getItem('moviesFound'));
@@ -42,10 +42,25 @@ function Main() {
       moviesFound.forEach((item) => moviesSaved.push(item))
       if (moviesFound.length > 0) {
         localStorage.setItem('moviesFound', JSON.stringify(moviesSaved));
+        setCards(moviesSaved.reverse());
       }
+    } else {
+      console.log('Этот фильм уже добавлен');
+    }
+    setPreloaderState(false);
+  }
+
+  const renderCards = () => {
+    if (typeof (localStorage.moviesFound) !== 'undefined') {
+      const currentCards = JSON.parse(localStorage.getItem('moviesFound'));
+      setCards(currentCards.reverse());
     }
   }
 
+  useEffect(() => {
+    getMovies();
+    renderCards();
+  }, []);
   return (
     <div>
       <Switch>
@@ -62,9 +77,15 @@ function Main() {
           />
           <SearchForm
             onSubmit={findMovies}
+            setPreloaderState={setPreloaderState}
+
           />
-          {/* <Preloader /> */}
-          <MoviesCardList />
+          <Preloader
+            isOn={isPreloaderOn}
+          />
+          <MoviesCardList
+            cards={cards}
+          />
         </Route>
         <Route path="/saved-movies">
           <Navigation

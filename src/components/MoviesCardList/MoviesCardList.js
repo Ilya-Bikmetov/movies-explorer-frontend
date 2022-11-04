@@ -1,23 +1,22 @@
 import { useLocation } from 'react-router-dom';
 import MoviesCard from './MoviesCard/MoviesCard.js';
 
-function MoviesCardList() {
+function MoviesCardList({ cards }) {
   const location = useLocation();
 
   return (
     <section className="movies">
       <ul className="movies__list">
         {location.pathname === "/movies" &&
-          <>
-            <MoviesCard />
-            <MoviesCard />
-          </>
+          cards.map((card, index) => (
+            <MoviesCard
+              key={index}
+              card={card}
+            />
+          ))
         }
         {location.pathname === "/saved-movies" &&
           <>
-            <MoviesCard />
-            <MoviesCard />
-            <MoviesCard />
           </>
         }
       </ul>

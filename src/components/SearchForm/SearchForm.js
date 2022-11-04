@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function SearchForm({ onSubmit }) {
+function SearchForm({ onSubmit, setPreloaderState }) {
   const [isSwitchOn, setSwitchCondition] = useState(false);
   const [inputData, setInputData] = useState({ movie: '' });
 
@@ -23,7 +23,8 @@ function SearchForm({ onSubmit }) {
 
   const submitSearch = (e) => {
     e.preventDefault();
-    onSubmit({movie: inputData.movie});
+    setPreloaderState(true);
+    onSubmit({ movie: inputData.movie });
   }
 
 

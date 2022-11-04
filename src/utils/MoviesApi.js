@@ -1,5 +1,5 @@
 import { checkResponse } from "./CheckResponse";
-export const baseUrl = 'https://api.nomoreparties.co/beatfilm-movies';
+import { baseUrl } from "./constants";
 const headers = {
   "Content-Type": "application/json",
 };

@@ -1,4 +1,5 @@
 .movie {
+  width: 100%;
   max-width: 364px;
   position: relative;
   border-radius: 6px;
@@ -92,6 +93,10 @@
 }
 
 @media (min-width: 513px) and (max-width: 911px) {
+  .movie {
+    max-width: 339px;
+  }
+
   .movies {
     padding: 70px 30px 85px;
   }
@@ -104,6 +109,10 @@
     margin: 14px 21px 16px 14px;
   }
 
+  .movie__title {
+    max-width: 260px;
+  }
+
   .movie__duration {
     padding: 0 0 14px 14px;
   }
@@ -114,11 +123,16 @@
     height: 168px;
   }
 
+  .movie {
+    max-width: 300px;
+  }
+
   .movie__sign {
     margin: 14px 20px 14px 14px;
   }
 
   .movie__title {
+    max-width: 240px;
     font-size: 12px;
     line-height: 15px;
   }
