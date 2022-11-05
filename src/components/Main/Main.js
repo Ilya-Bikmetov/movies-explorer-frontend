@@ -36,15 +36,12 @@ function Main() {
     } else {
       setCards(getCurrentCards().reverse());
     }
-
   };
-
 
   const getMovies = async () => {
     const movies = await Movies.getContent();
     localStorage.setItem('movies', JSON.stringify(movies));
   }
-
 
   const findMovies = ({ movie }) => {
     let movieSame = false;

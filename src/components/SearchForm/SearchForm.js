@@ -17,6 +17,7 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher 
     e.preventDefault();
     setPreloaderState(true);
     onSubmit({ movie: inputData.movie });
+    setInputData({ movie: '' });
   }
 
 
