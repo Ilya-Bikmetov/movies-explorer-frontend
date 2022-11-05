@@ -1,11 +1,11 @@
 import { useLocation } from 'react-router-dom';
 import MoviesCard from './MoviesCard/MoviesCard.js';
 
-function MoviesCardList({ cards }) {
+function MoviesCardList({ cards, isOn }) {
   const location = useLocation();
 
   return (
-    <section className="movies">
+    <section className={`movies ${isOn && 'movies_disabled'}`}>
       <ul className="movies__list">
         {location.pathname === "/movies" &&
           cards.map((card, index) => (

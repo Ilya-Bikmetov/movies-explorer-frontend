@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
-function SearchForm({ onSubmit, setPreloaderState }) {
-  const [isSwitchOn, setSwitchCondition] = useState(false);
+function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher }) {
   const [inputData, setInputData] = useState({ movie: '' });
+
+  const changeSwitchCondition = () => handleSwitcher(!isSwitcherOn);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -10,15 +11,6 @@ function SearchForm({ onSubmit, setPreloaderState }) {
       ...inputData,
       [name]: value
     });
-
-  }
-
-  const changeSwitchCondition = () => {
-    if (isSwitchOn) {
-      setSwitchCondition(false);
-    } else {
-      setSwitchCondition(true);
-    }
   }
 
   const submitSearch = (e) => {
@@ -45,14 +37,14 @@ function SearchForm({ onSubmit, setPreloaderState }) {
           />
           <button className="search-form__button" type="submit" aria-label="Поиск фильмов" />
           <div className="search-form__separator" />
-          <button onClick={changeSwitchCondition} className={`switcher ${isSwitchOn && 'switcher_on'}`} type="button" aria-label="Переключатель">
+          <button onClick={changeSwitchCondition} className={`switcher ${isSwitcherOn && 'switcher_on'}`} type="button" aria-label="Переключатель">
             <div className="switcher__circle" />
           </button>
           <p className="search-form__text">Короткометражки</p>
         </form>
       </div>
       <div className="search-form__swtich-container">
-        <button onClick={changeSwitchCondition} className={`switcher switcher_mobile ${isSwitchOn && 'switcher_on'}`} type="button" aria-label="Переключатель">
+        <button onClick={changeSwitchCondition} className={`switcher switcher_mobile ${isSwitcherOn && 'switcher_on'}`} type="button" aria-label="Переключатель">
           <div className="switcher__circle" />
         </button>
         <p className="search-form__text search-form__text_mobile">Короткометражки</p>

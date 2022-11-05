@@ -2,6 +2,10 @@
   padding: 70px 70px 85px;
 }
 
+.movies_disabled {
+  display: none;
+}
+
 .movies__list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(364px, 1fr));

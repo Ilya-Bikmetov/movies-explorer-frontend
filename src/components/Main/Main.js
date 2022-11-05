@@ -21,15 +21,31 @@ function Main() {
   const [cards, setCards] = useState([]);
   const [isPreloaderOn, setPreloaderState] = useState(false);
   const [isNavPanelOpen, setNavPanelOpen] = useState(false);
+  const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
 
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
+  const getCurrentCards = () => JSON.parse(localStorage.getItem('moviesFound'));
+
+  const handleShortMoviesSwitcher = (state) => {
+    setShortMoviesSwitcher(state);
+    if (state) {
+      const currentCards = getCurrentCards();
+      const shortMovieCards = currentCards.filter((card) => card.duration <= 40);
+      setCards(shortMovieCards.reverse());
+    } else {
+      setCards(getCurrentCards().reverse());
+    }
+
+  };
 
 
   const getMovies = async () => {
     const movies = await Movies.getContent();
     localStorage.setItem('movies', JSON.stringify(movies));
   }
+
+
   const findMovies = ({ movie }) => {
     let movieSame = false;
     const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
@@ -52,8 +68,7 @@ function Main() {
 
   const renderCards = () => {
     if (typeof (localStorage.moviesFound) !== 'undefined') {
-      const currentCards = JSON.parse(localStorage.getItem('moviesFound'));
-      setCards(currentCards.reverse());
+      setCards(getCurrentCards().reverse());
     }
   }
 
@@ -78,6 +93,8 @@ function Main() {
           <SearchForm
             onSubmit={findMovies}
             setPreloaderState={setPreloaderState}
+            isSwitcherOn={isShortMoviesOn}
+            handleSwitcher={handleShortMoviesSwitcher}
 
           />
           <Preloader
@@ -85,6 +102,7 @@ function Main() {
           />
           <MoviesCardList
             cards={cards}
+            isOn={isPreloaderOn}
           />
         </Route>
         <Route path="/saved-movies">
@@ -93,6 +111,9 @@ function Main() {
           />
           <SearchForm
             onSubmit={findMovies}
+            setPreloaderState={setPreloaderState}
+            isSwitcherOn={isShortMoviesOn}
+            handleSwitcher={handleShortMoviesSwitcher}
           />
           <MoviesCardList />
         </Route>
