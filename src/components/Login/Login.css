@@ -117,7 +117,8 @@
   align-items: center;
 }
 
-.profile-form__error {
+.profile-form__message {
+  display: none;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -126,6 +127,15 @@
   color: #FF3055;
   align-self: flex-start;
   margin: 10px 0 0 0;
+}
+
+.profile-form__message_error_active {
+  display: block;
+}
+
+.profile-form__message_success_active {
+  display: block;
+  color: #058016;
 }
 
 @media (min-width: 301px) and (max-width: 512px) {

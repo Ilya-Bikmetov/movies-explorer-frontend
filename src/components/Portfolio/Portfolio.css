@@ -50,7 +50,7 @@
 .portfolio__arrow {
   width: 18px;
   height: 60px;
-  background-image: url(../../../images/portfolio_arrow.svg);
+  background-image: url(../../images/portfolio_arrow.svg);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

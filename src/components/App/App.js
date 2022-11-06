@@ -16,14 +16,17 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import Navigation from '../Navigation/Navigation.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import NavPanel from '../NavPanel/NavPanel.js';
-import * as Movies from '../../utils/MoviesApi.js';
 import Preloader from '../Preloader/Preloader.js';
+import * as MainApi from '../../utils/MainApi.js'
+import * as Movies from '../../utils/MoviesApi.js';
 function App() {
   let moviesSaved = [];
   const [cards, setCards] = useState([]);
   const [isPreloaderOn, setPreloaderState] = useState(false);
   const [isNavPanelOpen, setNavPanelOpen] = useState(false);
   const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
+  const [isRegSuccess, setRegSuccess] = useState(false);
+  const [isRegIssue, setRegIssue] = useState(false);
 
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
@@ -41,8 +44,13 @@ function App() {
   };
 
   const getMovies = async () => {
-    const movies = await Movies.getContent();
-    localStorage.setItem('movies', JSON.stringify(movies));
+    try {
+      const movies = await Movies.getContent();
+      localStorage.setItem('movies', JSON.stringify(movies));
+    }
+    catch (err) {
+      console.log(err);
+    }
   }
 
   const findMovies = ({ movie }) => {
@@ -60,7 +68,7 @@ function App() {
         setCards(moviesSaved.reverse());
       }
     } else {
-      console.log('Этот фильм уже добавлен');
+      console.log('Этот запрос уже делали');
     }
     setPreloaderState(false);
   }
@@ -71,10 +79,29 @@ function App() {
     }
   }
 
+  const closeNotices = () => {
+    isRegSuccess && setRegSuccess(false);
+    isRegIssue && setRegIssue(false);
+  }
+
+  const handleSignupSubmit = async ({ name, email, password }) => {
+    try {
+      const user = await MainApi.signup({ name, email, password });
+      localStorage.setItem('jwt', true);
+      setRegSuccess(true);
+    } catch (err) {
+      console.log(err);
+      setRegIssue(true);
+    }
+  }
+
   useEffect(() => {
     getMovies();
     renderCards();
   }, []);
+
+
+
   return (
     <section className="page">
       <Header />
@@ -96,7 +123,6 @@ function App() {
               setPreloaderState={setPreloaderState}
               isSwitcherOn={isShortMoviesOn}
               handleSwitcher={handleShortMoviesSwitcher}
-
             />
             <Preloader
               isOn={isPreloaderOn}
@@ -128,7 +154,12 @@ function App() {
             <Login />
           </Route>
           <Route path="/signup">
-            <Register />
+            <Register
+              onSubmit={handleSignupSubmit}
+              isRegSuccess={isRegSuccess}
+              isRegIssue={isRegIssue}
+              onClose={closeNotices}
+            />
           </Route>
           <Route path="*">
             <NotFound />

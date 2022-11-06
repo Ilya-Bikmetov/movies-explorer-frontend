@@ -22,6 +22,7 @@
 }
 
 .movie__title {
+  max-width: 290px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
