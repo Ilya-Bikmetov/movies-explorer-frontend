@@ -19,6 +19,7 @@ import NavPanel from '../NavPanel/NavPanel.js';
 import Preloader from '../Preloader/Preloader.js';
 import * as MainApi from '../../utils/MainApi.js'
 import * as Movies from '../../utils/MoviesApi.js';
+import user from '../../../../movies-explorer-api/models/user';
 function App() {
   let moviesSaved = [];
   const [cards, setCards] = useState([]);
