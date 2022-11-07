@@ -2,7 +2,7 @@ import './App.css';
 import Header from '../Header/Header.js';
 import Footer from '../Footer/Footer.js';
 import { useState, useEffect } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import Promo from "../Promo/Promo.js";
 import AboutProject from "../AboutProject/AboutProject.js";
 import Techs from "../Techs/Techs.js";
@@ -27,6 +27,7 @@ function App() {
   const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
   const [isRegSuccess, setRegSuccess] = useState(false);
   const [isRegIssue, setRegIssue] = useState(false);
+  const history = useHistory();
 
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
@@ -68,7 +69,7 @@ function App() {
         setCards(moviesSaved.reverse());
       }
     } else {
-      console.log('Этот запрос уже делали');
+      console.log('По этому запросу фильмы уже добавлены');
     }
     setPreloaderState(false);
   }
@@ -86,7 +87,7 @@ function App() {
 
   const handleSignupSubmit = async ({ name, email, password }) => {
     try {
-      const user = await MainApi.signup({ name, email, password });
+      await MainApi.signup({ name, email, password });
       localStorage.setItem('jwt', true);
       setRegSuccess(true);
     } catch (err) {
@@ -95,81 +96,113 @@ function App() {
     }
   }
 
+  const handleSigninSubmit = async ({ email, password }) => {
+    try {
+      await MainApi.signin({ email, password });
+      history.push('/movies');
+    } catch (err) {
+      console.log(err);
+      setRegIssue(true);
+    }
+  }
+
+  const handleSignout = async () => {
+    try {
+      await MainApi.clearJwtCookie();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleEditProfile = async ({ name, email }) => {
+    try {
+      await MainApi.editProfile({ name, email });
+    } catch (err) {
+      setRegIssue(true);
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     getMovies();
     renderCards();
   }, []);
 
-
-
   return (
     <section className="page">
       <Header />
-      <div>
-        <Switch>
-          <Route exact path="/">
-            <Promo />
-            <AboutProject />
-            <Techs />
-            <AboutMe />
-            <Portfolio />
-          </Route>
-          <Route path="/movies">
-            <Navigation
-              onOpen={openNavPanel}
-            />
-            <SearchForm
-              onSubmit={findMovies}
-              setPreloaderState={setPreloaderState}
-              isSwitcherOn={isShortMoviesOn}
-              handleSwitcher={handleShortMoviesSwitcher}
-            />
-            <Preloader
-              isOn={isPreloaderOn}
-            />
-            <MoviesCardList
-              cards={cards}
-              isOn={isPreloaderOn}
-            />
-          </Route>
-          <Route path="/saved-movies">
-            <Navigation
-              onOpen={openNavPanel}
-            />
-            <SearchForm
-              onSubmit={findMovies}
-              setPreloaderState={setPreloaderState}
-              isSwitcherOn={isShortMoviesOn}
-              handleSwitcher={handleShortMoviesSwitcher}
-            />
-            <MoviesCardList />
-          </Route>
-          <Route path="/profile">
-            <Navigation
-              onOpen={openNavPanel}
-            />
-            <Profile />
-          </Route>
-          <Route path="/signin">
-            <Login />
-          </Route>
-          <Route path="/signup">
-            <Register
-              onSubmit={handleSignupSubmit}
-              isRegSuccess={isRegSuccess}
-              isRegIssue={isRegIssue}
-              onClose={closeNotices}
-            />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
-        <NavPanel
-          onClose={closeNavPanel}
-          isOpen={isNavPanelOpen}
-        />
-      </div>
+      <Switch>
+        <Route exact path="/">
+          <Promo />
+          <AboutProject />
+          <Techs />
+          <AboutMe />
+          <Portfolio />
+        </Route>
+        <Route path="/movies">
+          <Navigation
+            onOpen={openNavPanel}
+          />
+          <SearchForm
+            onSubmit={findMovies}
+            setPreloaderState={setPreloaderState}
+            isSwitcherOn={isShortMoviesOn}
+            handleSwitcher={handleShortMoviesSwitcher}
+          />
+          <Preloader
+            isOn={isPreloaderOn}
+          />
+          <MoviesCardList
+            cards={cards}
+            isOn={isPreloaderOn}
+          />
+        </Route>
+        <Route path="/saved-movies">
+          <Navigation
+            onOpen={openNavPanel}
+          />
+          <SearchForm
+            onSubmit={findMovies}
+            setPreloaderState={setPreloaderState}
+            isSwitcherOn={isShortMoviesOn}
+            handleSwitcher={handleShortMoviesSwitcher}
+          />
+          <MoviesCardList />
+        </Route>
+        <Route path="/profile">
+          <Navigation
+            onOpen={openNavPanel}
+          />
+          <Profile
+            onSubmit={handleEditProfile}
+            onSignOut={handleSignout}
+            onClose={closeNotices}
+            isRegIssue={isRegIssue}
+          />
+        </Route>
+        <Route path="/signin">
+          <Login
+            onSubmit={handleSigninSubmit}
+            isRegIssue={isRegIssue}
+            onClose={closeNotices}
+          />
+        </Route>
+        <Route path="/signup">
+          <Register
+            onSubmit={handleSignupSubmit}
+            isRegSuccess={isRegSuccess}
+            isRegIssue={isRegIssue}
+            onClose={closeNotices}
+          />
+        </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
+      </Switch>
+      <NavPanel
+        onClose={closeNavPanel}
+        isOpen={isNavPanelOpen}
+      />
       <Footer />
     </section>
   );

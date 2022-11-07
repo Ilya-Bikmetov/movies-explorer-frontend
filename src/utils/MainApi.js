@@ -2,7 +2,6 @@ import { baseUrlMainApi } from "./constants.js";
 import { checkResponse } from "./CheckResponse.js";
 
 const headers = {
-  'Access-Control-Allow-Origin': 'http://localhost:3001/',
   'Content-Type': 'application/json',
 }
 
@@ -25,8 +24,8 @@ export const signin = ({ email, password }) => {
     .then((res) => checkResponse(res))
 }
 
-export const clearJwtCookie = (url) => {
-  return fetch(`${this._baseUrl}${url}`, {
+export const clearJwtCookie = () => {
+  return fetch(`${baseUrlMainApi}signout`, {
     method: 'GET',
     headers,
     credentials: "include",
@@ -36,4 +35,18 @@ export const clearJwtCookie = (url) => {
         return;
       return Promise.reject(`Возникла ошибка ${res.status}`);
     })
+}
+
+export const editProfile = ({ name, email }) => {
+  const body = {
+    name,
+    email
+  }
+  return fetch(`${baseUrlMainApi}users/me`, {
+    method: 'PATCH',
+    body: JSON.stringify(body),
+    headers,
+    credentials: "include",
+  })
+    .then(checkResponse)
 }

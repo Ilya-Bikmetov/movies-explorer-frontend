@@ -74,7 +74,9 @@
   border: none;
   text-align: right;
 }
-
+.profile-line__input:-webkit-autofill:focus {
+  background-color: greenyellow;
+}
 
 @media (min-width: 301px) and (max-width: 512px) {
   .profile-form {

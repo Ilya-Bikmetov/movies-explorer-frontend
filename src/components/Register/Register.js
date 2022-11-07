@@ -14,7 +14,6 @@ function Register({ onSubmit, isRegSuccess, isRegIssue, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ name: inputData.name, email: inputData.email, password: inputData.password });
-
   }
 
   useEffect(() => {
@@ -24,6 +23,7 @@ function Register({ onSubmit, isRegSuccess, isRegIssue, onClose }) {
   useEffect(() => {
     onClose();
   }, [history])
+
   return (
     <form onSubmit={handleSubmit} className="profile-form">
       <Link to={"/"} className="logo logo_login" />

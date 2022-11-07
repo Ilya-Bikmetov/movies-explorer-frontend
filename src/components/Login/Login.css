@@ -133,6 +133,11 @@
   display: block;
 }
 
+.profile-form__message_error-profile_active {
+  display: block;
+  margin: 20px auto 0;
+}
+
 .profile-form__message_success_active {
   display: block;
   color: #058016;
