@@ -19,7 +19,8 @@ import NavPanel from '../NavPanel/NavPanel.js';
 import Preloader from '../Preloader/Preloader.js';
 import * as MainApi from '../../utils/MainApi.js'
 import * as Movies from '../../utils/MoviesApi.js';
-import user from '../../../../movies-explorer-api/models/user';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+
 function App() {
   let moviesSaved = [];
   const [cards, setCards] = useState([]);
@@ -28,7 +29,7 @@ function App() {
   const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
   const [isRegSuccess, setRegSuccess] = useState(false);
   const [isRegIssue, setRegIssue] = useState(false);
-  const [userInfo, setUserInfo] = useState({ name: '', email: '' });
+  const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
 
@@ -122,6 +123,7 @@ function App() {
   const handleEditProfile = async ({ name, email }) => {
     try {
       await MainApi.editProfile({ name, email });
+      setCurrentUser({ name, email });
     } catch (err) {
       setRegIssue(true);
       console.log(err);
@@ -135,7 +137,7 @@ function App() {
         const data = await MainApi.getContent();
         if (data.user) {
           setLoggedIn(true);
-          setUserInfo({ name: data.user.name, email: data.user.email });
+          setCurrentUser({ name: data.user.name, email: data.user.email });
         }
       }
     } catch (err) {
@@ -151,76 +153,77 @@ function App() {
 
   return (
     <section className="page">
-      <Header />
-      <Switch>
-        <Route exact path="/">
-          <Promo />
-          <AboutProject />
-          <Techs />
-          <AboutMe />
-          <Portfolio />
-        </Route>
-        <Route path="/movies">
-          <Navigation
-            onOpen={openNavPanel}
-          />
-          <SearchForm
-            onSubmit={findMovies}
-            setPreloaderState={setPreloaderState}
-            isSwitcherOn={isShortMoviesOn}
-            handleSwitcher={handleShortMoviesSwitcher}
-          />
-          <Preloader
-            isOn={isPreloaderOn}
-          />
-          <MoviesCardList
-            cards={cards}
-            isOn={isPreloaderOn}
-          />
-        </Route>
-        <Route path="/saved-movies">
-          <Navigation
-            onOpen={openNavPanel}
-          />
-          <SearchForm
-            onSubmit={findMovies}
-            setPreloaderState={setPreloaderState}
-            isSwitcherOn={isShortMoviesOn}
-            handleSwitcher={handleShortMoviesSwitcher}
-          />
-          <MoviesCardList />
-        </Route>
-        <Route path="/profile">
-          <Navigation
-            onOpen={openNavPanel}
-          />
-          <Profile
-            onSubmit={handleEditProfile}
-            onSignOut={handleSignout}
-            onClose={closeNotices}
-            isRegIssue={isRegIssue}
-            userInfo={userInfo}
-          />
-        </Route>
-        <Route path="/signin">
-          <Login
-            onSubmit={handleSigninSubmit}
-            isRegIssue={isRegIssue}
-            onClose={closeNotices}
-          />
-        </Route>
-        <Route path="/signup">
-          <Register
-            onSubmit={handleSignupSubmit}
-            isRegSuccess={isRegSuccess}
-            isRegIssue={isRegIssue}
-            onClose={closeNotices}
-          />
-        </Route>
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Promo />
+            <AboutProject />
+            <Techs />
+            <AboutMe />
+            <Portfolio />
+          </Route>
+          <Route path="/movies">
+            <Navigation
+              onOpen={openNavPanel}
+            />
+            <SearchForm
+              onSubmit={findMovies}
+              setPreloaderState={setPreloaderState}
+              isSwitcherOn={isShortMoviesOn}
+              handleSwitcher={handleShortMoviesSwitcher}
+            />
+            <Preloader
+              isOn={isPreloaderOn}
+            />
+            <MoviesCardList
+              cards={cards}
+              isOn={isPreloaderOn}
+            />
+          </Route>
+          <Route path="/saved-movies">
+            <Navigation
+              onOpen={openNavPanel}
+            />
+            <SearchForm
+              onSubmit={findMovies}
+              setPreloaderState={setPreloaderState}
+              isSwitcherOn={isShortMoviesOn}
+              handleSwitcher={handleShortMoviesSwitcher}
+            />
+            <MoviesCardList />
+          </Route>
+          <Route path="/profile">
+            <Navigation
+              onOpen={openNavPanel}
+            />
+            <Profile
+              onSubmit={handleEditProfile}
+              onSignOut={handleSignout}
+              onClose={closeNotices}
+              isRegIssue={isRegIssue}
+            />
+          </Route>
+          <Route path="/signin">
+            <Login
+              onSubmit={handleSigninSubmit}
+              isRegIssue={isRegIssue}
+              onClose={closeNotices}
+            />
+          </Route>
+          <Route path="/signup">
+            <Register
+              onSubmit={handleSignupSubmit}
+              isRegSuccess={isRegSuccess}
+              isRegIssue={isRegIssue}
+              onClose={closeNotices}
+            />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+      </CurrentUserContext.Provider>
       <NavPanel
         onClose={closeNavPanel}
         isOpen={isNavPanelOpen}

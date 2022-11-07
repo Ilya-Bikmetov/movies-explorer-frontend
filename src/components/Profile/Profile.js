@@ -1,8 +1,10 @@
 import { Link, useHistory } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 function Profile({ onSubmit, onSignOut, isRegIssue, onClose, userInfo }) {
   const [inputData, setInputData] = useState({ name: '', email: '' });
   const history = useHistory();
+  const currentUser = useContext(CurrentUserContext);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -23,13 +25,13 @@ function Profile({ onSubmit, onSignOut, isRegIssue, onClose, userInfo }) {
 
   return (
     <form onSubmit={handleSubmit} className="profile-form profile-form_profile">
-      <h1 className="profile-form__title profile-form__title_profile">Привет, Виталий!</h1>
+      <h1 className="profile-form__title profile-form__title_profile">{`Привет, ${currentUser.name}!`}</h1>
       <div className="profile-container">
         <div className="profile-line profile-line_border-bottom">
           <p className="profile-name profile-name_bottom-line">Имя</p>
           <input
             className="profile-line__input"
-            placeholder={`${userInfo.name}`}
+            placeholder={`${currentUser.name}`}
             name="name"
             required
             onChange={handleInput}
@@ -40,7 +42,7 @@ function Profile({ onSubmit, onSignOut, isRegIssue, onClose, userInfo }) {
           <p className="profile-name">E-mail</p>
           <input
             className="profile-line__input"
-            placeholder={`${userInfo.email}`}
+            placeholder={`${currentUser.email}`}
             name="email"
             type="email"
             required
