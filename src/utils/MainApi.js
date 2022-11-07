@@ -24,6 +24,20 @@ export const signin = ({ email, password }) => {
     .then((res) => checkResponse(res))
 }
 
+export const editProfile = ({ name, email }) => {
+  const body = {
+    name,
+    email
+  }
+  return fetch(`${baseUrlMainApi}users/me`, {
+    method: 'PATCH',
+    body: JSON.stringify(body),
+    headers,
+    credentials: "include",
+  })
+    .then(checkResponse)
+}
+
 export const clearJwtCookie = () => {
   return fetch(`${baseUrlMainApi}signout`, {
     method: 'GET',
@@ -37,16 +51,11 @@ export const clearJwtCookie = () => {
     })
 }
 
-export const editProfile = ({ name, email }) => {
-  const body = {
-    name,
-    email
-  }
+export const getContent = () => {
   return fetch(`${baseUrlMainApi}users/me`, {
-    method: 'PATCH',
-    body: JSON.stringify(body),
+    method: 'GET',
     headers,
     credentials: "include",
   })
-    .then(checkResponse)
+    .then((res) => checkResponse(res))
 }

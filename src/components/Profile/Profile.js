@@ -1,10 +1,8 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useState, useEffect } from "react";
-function Profile({ onSubmit, onSignOut, isRegIssue, onClose }) {
+function Profile({ onSubmit, onSignOut, isRegIssue, onClose, userInfo }) {
   const [inputData, setInputData] = useState({ name: '', email: '' });
   const history = useHistory();
-  const name = 'Виталий';
-  const email = 'pochta@yandex.ru';
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -31,7 +29,7 @@ function Profile({ onSubmit, onSignOut, isRegIssue, onClose }) {
           <p className="profile-name profile-name_bottom-line">Имя</p>
           <input
             className="profile-line__input"
-            placeholder={`${name}`}
+            placeholder={`${userInfo.name}`}
             name="name"
             required
             onChange={handleInput}
@@ -42,7 +40,7 @@ function Profile({ onSubmit, onSignOut, isRegIssue, onClose }) {
           <p className="profile-name">E-mail</p>
           <input
             className="profile-line__input"
-            placeholder={`${email}`}
+            placeholder={`${userInfo.email}`}
             name="email"
             type="email"
             required

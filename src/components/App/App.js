@@ -27,6 +27,8 @@ function App() {
   const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
   const [isRegSuccess, setRegSuccess] = useState(false);
   const [isRegIssue, setRegIssue] = useState(false);
+  const [userInfo, setUserInfo] = useState({ name: '', email: '' });
+  const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
 
   const closeNavPanel = () => setNavPanelOpen(false);
@@ -88,7 +90,6 @@ function App() {
   const handleSignupSubmit = async ({ name, email, password }) => {
     try {
       await MainApi.signup({ name, email, password });
-      localStorage.setItem('jwt', true);
       setRegSuccess(true);
     } catch (err) {
       console.log(err);
@@ -99,6 +100,8 @@ function App() {
   const handleSigninSubmit = async ({ email, password }) => {
     try {
       await MainApi.signin({ email, password });
+      setLoggedIn(true);
+      localStorage.setItem('jwt', true);
       history.push('/movies');
     } catch (err) {
       console.log(err);
@@ -109,6 +112,7 @@ function App() {
   const handleSignout = async () => {
     try {
       await MainApi.clearJwtCookie();
+      localStorage.setItem('jwt', false);
     } catch (err) {
       console.log(err);
     }
@@ -123,7 +127,23 @@ function App() {
     }
   }
 
+  const getContent = async () => {
+    try {
+      const jwt = localStorage.getItem('jwt');
+      if (jwt === 'true') {
+        const data = await MainApi.getContent();
+        if (data.user) {
+          setLoggedIn(true);
+          setUserInfo({ name: data.user.name, email: data.user.email });
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
+    getContent();
     getMovies();
     renderCards();
   }, []);
@@ -178,6 +198,7 @@ function App() {
             onSignOut={handleSignout}
             onClose={closeNotices}
             isRegIssue={isRegIssue}
+            userInfo={userInfo}
           />
         </Route>
         <Route path="/signin">
