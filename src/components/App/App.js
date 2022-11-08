@@ -17,6 +17,7 @@ import Navigation from '../Navigation/Navigation.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import NavPanel from '../NavPanel/NavPanel.js';
 import Preloader from '../Preloader/Preloader.js';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import * as MainApi from '../../utils/MainApi.js'
 import * as Movies from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
