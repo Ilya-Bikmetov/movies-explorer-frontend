@@ -150,7 +150,7 @@ function App() {
       getContent();
       history.push('movies');
     }
-  }, [loggedIn]);
+  }, [loggedIn, history]);
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -170,7 +170,9 @@ function App() {
                 ?
                 <Header />
                 :
-                <Navigation />
+                <Navigation
+                  onOpen={openNavPanel}
+                />
             }
             <Promo />
             <AboutProject />

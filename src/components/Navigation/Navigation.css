@@ -133,6 +133,7 @@
   background-color: black;
 }
 
+
 .navigation__btn__element:before {
   content: "";
   width: 100%;
@@ -153,6 +154,17 @@
   background-color: black;
 }
 
+.navigation__btn__element_mainpage {
+  background-color: white;
+}
+
+.navigation__btn__element_mainpage:before {
+  background-color: white;
+}
+
+.navigation__btn__element_mainpage:after {
+  background-color: white;
+}
 
 @media (min-width: 400px) and (max-width: 911px) {
   .navigation {

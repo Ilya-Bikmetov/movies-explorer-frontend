@@ -27,7 +27,7 @@ function Navigation({ onOpen, loggedIn }) {
             </Link>
           </nav>
           <button onClick={openPanel} type="button" aria-label="Открыть панель" className="navigation__btn">
-            <div className="navigation__btn__element" />
+            <div className={`navigation__btn__element ${location.pathname === "/" && 'navigation__btn__element_mainpage'}`} />
           </button>
         </section>
   );
