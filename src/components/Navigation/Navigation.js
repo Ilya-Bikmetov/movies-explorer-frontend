@@ -1,6 +1,6 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-function Navigation({ onOpen, loggedIn }) {
+function Navigation({ onOpen }) {
   const location = useLocation();
 
   const openPanel = () => {

@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import MoviesCard from './MoviesCard/MoviesCard.js';
 
-function MoviesCardList({ cards, isOn }) {
+function MoviesCardList({ cards, isOn, handleLike, isLike }) {
   const location = useLocation();
 
   return (
@@ -12,6 +12,8 @@ function MoviesCardList({ cards, isOn }) {
             <MoviesCard
               key={index}
               card={card}
+              handleLike={handleLike}
+              isLike={isLike}
             />
           ))
         }

@@ -2,30 +2,37 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { imgUrl } from '../../../utils/constants.js';
 
-function MoviesCard({ card }) {
-  const [isLiked, setLike] = useState(false);
+function MoviesCard({ card, handleLike, isLike }) {
+  // const [isLiked, setLike] = useState(false);
   const [isPointed, setPoint] = useState(false);
   const location = useLocation();
 
 
+  // const changeLike = () => {
+  //   if (isLiked) {
+  //     setLike(false);
+  //     handleLike(false, card);
+  //   } else {
+  //     setLike(true);
+  //     handleLike(false, card);
+  //   }
+
+  // }
+
   const changeLike = () => {
-    if (isLiked) {
-      setLike(false);
-    } else {
-      setLike(true);
-    }
+    handleLike(card);
   }
   return (
     <li className="movie">
       <a href={card.trailerLink} className="movie__trailer" target="blank">
-        <img className="movie__photo" src={`${imgUrl}${card.image.url}`} alt="фото фильма" />
+        <img className="movie__photo" src={`${imgUrl}/${card.image.url}`} alt="фото фильма" />
       </a>
       {
         location.pathname === "/movies" &&
         <>
           <div className="movie__sign">
             <h2 className="movie__title">{card.nameRU}</h2>
-            <button onClick={changeLike} className={`movie__like ${isLiked && 'movie__like_active'}`} type="button" aria-label="Поставить лайк" />
+            <button onClick={changeLike} className={`movie__like ${isLike && 'movie__like_active'}`} type="button" aria-label="Поставить лайк" />
           </div>
           <p className="movie__duration">{Math.floor(card.duration / 60)} ч {Math.floor(card.duration % 60)} м</p>
         </>

@@ -25,6 +25,7 @@ import Navigation from '../Navigation/Navigation';
 function App() {
   let moviesSaved = [];
   const [cards, setCards] = useState([]);
+  const [cardsLiked, setCardsLiked] = useState([]);
   const [isPreloaderOn, setPreloaderState] = useState(false);
   const [isNavPanelOpen, setNavPanelOpen] = useState(false);
   const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
@@ -32,6 +33,7 @@ function App() {
   const [isRegIssue, setRegIssue] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [loggedIn, setLoggedIn] = useState(false);
+  const [like, setLike] = useState(false);
   const history = useHistory();
 
   const closeNavPanel = () => setNavPanelOpen(false);
@@ -58,6 +60,15 @@ function App() {
       localStorage.setItem('movies', JSON.stringify(movies));
     }
     catch (err) {
+      console.log(err);
+    }
+  }
+
+  const getMoviesLiked = async () => {
+    try {
+      const moviesLiked = await MainApi.getMoviesLiked();
+      moviesLiked.length > 0 && localStorage.setItem('moviesLiked', JSON.stringify(moviesLiked));
+    } catch (err) {
       console.log(err);
     }
   }
@@ -143,11 +154,27 @@ function App() {
     }
   }
 
+  const handleLike = async (card) => {
+    try {
+      let movieId;
+      const cardLiked = cardsLiked.find((c) => c.movieId === card.id);
+      if (cardLiked)
+        movieId = cardLiked._id;
+      const newCard = await MainApi.changeLikeCardStatus(like, card, movieId);
+      setCardsLiked([...cardsLiked, newCard]);
+      setLike(!like);
+    } catch (err) {
+      console.log(err);
+      setLike(false);
+    }
+  }
+
   useEffect(() => {
     if (loggedIn) {
       getMovies();
       renderCards();
       getContent();
+      getMoviesLiked();
       history.push('movies');
     }
   }, [loggedIn, history]);
@@ -191,6 +218,8 @@ function App() {
             handleSwitcher={handleShortMoviesSwitcher}
             isPreloaderOn={isPreloaderOn}
             cards={cards}
+            handleLike={handleLike}
+            isLike={like}
           >
           </ProtectedRoute>
           <ProtectedRoute
@@ -202,6 +231,7 @@ function App() {
             setPreloaderState={setPreloaderState}
             isSwitcherOn={isShortMoviesOn}
             handleSwitcher={handleShortMoviesSwitcher}
+            handleLike={handleLike}
           >
           </ProtectedRoute>
           <ProtectedRoute

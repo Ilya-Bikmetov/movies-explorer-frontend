@@ -2,7 +2,7 @@ import Navigation from "../Navigation/Navigation.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import Preloader from "../Preloader/Preloader.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
-function Movies({ onOpen, onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher, isPreloaderOn, cards }) {
+function Movies({ onOpen, onSubmit, setPreloaderState, isSwitcherOn, handleLike, handleSwitcher, isPreloaderOn, cards, isLike }) {
   return (
     <>
       <Navigation
@@ -18,8 +18,10 @@ function Movies({ onOpen, onSubmit, setPreloaderState, isSwitcherOn, handleSwitc
         isOn={isPreloaderOn}
       />
       <MoviesCardList
+        isLike={isLike}
         cards={cards}
         isOn={isPreloaderOn}
+        handleLike={handleLike}
       />
     </>
   );
