@@ -3,11 +3,16 @@
   align-items: center;
   justify-content: space-between;
   background-color: white;
-  padding: 17px 70px 89px;
+  padding: 21px 70px 89px;
 }
 
 .navigation_profile {
-  padding: 17px 70px 0;
+  padding: 21px 70px 0;
+}
+
+.navigation_mainpage {
+  padding: 21px 70px 93px;
+  background-color: #073042;
 }
 
 .navigation__btn {
@@ -53,6 +58,10 @@
   text-decoration: underline;
 }
 
+.nav-link_mainpage {
+  color: #FFFFFF;
+}
+
 .icon-container {
   width: 26px;
   height: 30px;
@@ -94,6 +103,10 @@
   font-size: 14px;
   line-height: 16px;
   color: black;
+}
+
+.icon-sign_mainpage {
+  color: #FFFFFF;
 }
 
 .navigation__btn {
@@ -167,10 +180,12 @@
   .navigation__links {
     display: none;
   }
+
   .navigation__btn {
     width: 40px;
     display: flex;
   }
+
   .navigation__btn__element {
     width: 22px;
   }

@@ -12,15 +12,15 @@ import Login from '../Login/Login.js';
 import Register from '../Register/Register.js';
 import NotFound from '../NotFound/NotFound.js';
 import Profile from '../Profile/Profile.js';
-import SearchForm from '../SearchForm/SearchForm.js';
-import Navigation from '../Navigation/Navigation.js';
-import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
+import Movies from '../Movies/Movies.js';
+import MoviesSaved from '../MoviesSaved/MoviesSaved.js';
 import NavPanel from '../NavPanel/NavPanel.js';
-import Preloader from '../Preloader/Preloader.js';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import * as MainApi from '../../utils/MainApi.js'
-import * as Movies from '../../utils/MoviesApi.js';
+import * as MoviesApi from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import Navigation from '../Navigation/Navigation';
+
 
 function App() {
   let moviesSaved = [];
@@ -37,7 +37,10 @@ function App() {
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
   const getCurrentCards = () => JSON.parse(localStorage.getItem('moviesFound'));
-
+  const closeNotices = () => {
+    isRegSuccess && setRegSuccess(false);
+    isRegIssue && setRegIssue(false);
+  }
   const handleShortMoviesSwitcher = (state) => {
     setShortMoviesSwitcher(state);
     if (state) {
@@ -51,7 +54,7 @@ function App() {
 
   const getMovies = async () => {
     try {
-      const movies = await Movies.getContent();
+      const movies = await MoviesApi.getContent();
       localStorage.setItem('movies', JSON.stringify(movies));
     }
     catch (err) {
@@ -85,11 +88,6 @@ function App() {
     }
   }
 
-  const closeNotices = () => {
-    isRegSuccess && setRegSuccess(false);
-    isRegIssue && setRegIssue(false);
-  }
-
   const handleSignupSubmit = async ({ name, email, password }) => {
     try {
       await MainApi.signup({ name, email, password });
@@ -105,7 +103,6 @@ function App() {
       await MainApi.signin({ email, password });
       setLoggedIn(true);
       localStorage.setItem('jwt', true);
-      history.push('/movies');
     } catch (err) {
       console.log(err);
       setRegIssue(true);
@@ -116,6 +113,9 @@ function App() {
     try {
       await MainApi.clearJwtCookie();
       localStorage.setItem('jwt', false);
+      setLoggedIn(false);
+      localStorage.removeItem('moviesFound');
+      setCards([]);
     } catch (err) {
       console.log(err);
     }
@@ -133,13 +133,10 @@ function App() {
 
   const getContent = async () => {
     try {
-      const jwt = localStorage.getItem('jwt');
-      if (jwt === 'true') {
-        const data = await MainApi.getContent();
-        if (data.user) {
-          setLoggedIn(true);
-          setCurrentUser({ name: data.user.name, email: data.user.email });
-        }
+      const data = await MainApi.getContent();
+      if (data.user) {
+        setLoggedIn(true);
+        setCurrentUser({ name: data.user.name, email: data.user.email });
       }
     } catch (err) {
       console.log(err);
@@ -147,64 +144,75 @@ function App() {
   }
 
   useEffect(() => {
-    getContent();
-    getMovies();
-    renderCards();
+    if (loggedIn) {
+      getMovies();
+      renderCards();
+      getContent();
+      history.push('movies');
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt === 'true') {
+      setLoggedIn(true);
+    }
   }, []);
 
   return (
     <section className="page">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
+
         <Switch>
           <Route exact path="/">
+            {
+              !loggedIn
+                ?
+                <Header />
+                :
+                <Navigation />
+            }
             <Promo />
             <AboutProject />
             <Techs />
             <AboutMe />
             <Portfolio />
           </Route>
-          <Route path="/movies">
-            <Navigation
-              onOpen={openNavPanel}
-            />
-            <SearchForm
-              onSubmit={findMovies}
-              setPreloaderState={setPreloaderState}
-              isSwitcherOn={isShortMoviesOn}
-              handleSwitcher={handleShortMoviesSwitcher}
-            />
-            <Preloader
-              isOn={isPreloaderOn}
-            />
-            <MoviesCardList
-              cards={cards}
-              isOn={isPreloaderOn}
-            />
-          </Route>
-          <Route path="/saved-movies">
-            <Navigation
-              onOpen={openNavPanel}
-            />
-            <SearchForm
-              onSubmit={findMovies}
-              setPreloaderState={setPreloaderState}
-              isSwitcherOn={isShortMoviesOn}
-              handleSwitcher={handleShortMoviesSwitcher}
-            />
-            <MoviesCardList />
-          </Route>
-          <Route path="/profile">
-            <Navigation
-              onOpen={openNavPanel}
-            />
-            <Profile
-              onSubmit={handleEditProfile}
-              onSignOut={handleSignout}
-              onClose={closeNotices}
-              isRegIssue={isRegIssue}
-            />
-          </Route>
+          <ProtectedRoute
+            path="/movies"
+            component={Movies}
+            loggedIn={loggedIn}
+            onOpen={openNavPanel}
+            onSubmit={findMovies}
+            setPreloaderState={setPreloaderState}
+            isSwitcherOn={isShortMoviesOn}
+            handleSwitcher={handleShortMoviesSwitcher}
+            isPreloaderOn={isPreloaderOn}
+            cards={cards}
+          >
+          </ProtectedRoute>
+          <ProtectedRoute
+            path="/saved-movies"
+            component={MoviesSaved}
+            loggedIn={loggedIn}
+            onOpen={openNavPanel}
+            onSubmit={findMovies}
+            setPreloaderState={setPreloaderState}
+            isSwitcherOn={isShortMoviesOn}
+            handleSwitcher={handleShortMoviesSwitcher}
+          >
+          </ProtectedRoute>
+          <ProtectedRoute
+            path="/profile"
+            loggedIn={loggedIn}
+            component={Profile}
+            onOpenNavPanel={openNavPanel}
+            onSubmit={handleEditProfile}
+            onSignOut={handleSignout}
+            onClose={closeNotices}
+            isRegIssue={isRegIssue}
+          >
+          </ProtectedRoute>
           <Route path="/signin">
             <Login
               onSubmit={handleSigninSubmit}
