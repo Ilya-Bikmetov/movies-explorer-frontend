@@ -13,7 +13,6 @@ function MoviesCardList({ cards, isOn, handleLike, isLike }) {
               key={index}
               card={card}
               handleLike={handleLike}
-              isLike={isLike}
             />
           ))
         }

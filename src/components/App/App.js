@@ -31,9 +31,8 @@ function App() {
   const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
   const [isRegSuccess, setRegSuccess] = useState(false);
   const [isRegIssue, setRegIssue] = useState(false);
-  const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
+  const [currentUser, setCurrentUser] = useState({ name: '', email: '', id: '' });
   const [loggedIn, setLoggedIn] = useState(false);
-  const [like, setLike] = useState(false);
   const history = useHistory();
 
   const closeNavPanel = () => setNavPanelOpen(false);
@@ -147,25 +146,35 @@ function App() {
       const data = await MainApi.getContent();
       if (data.user) {
         setLoggedIn(true);
-        setCurrentUser({ name: data.user.name, email: data.user.email });
+        setCurrentUser({ name: data.user.name, email: data.user.email, id: data.user._id });
       }
     } catch (err) {
       console.log(err);
     }
   }
 
-  const handleLike = async (card) => {
+  const getLikedMoviesApi = async () => {
+    const moviesLiked = await MainApi.getMoviesLiked();
+    localStorage.setItem('moviesSavedApi', JSON.stringify(moviesLiked));
+  }
+
+  const handleLike = async (like, card) => {
     try {
       let movieId;
-      const cardLiked = cardsLiked.find((c) => c.movieId === card.id);
+      const cardLiked = cardsLiked.find((c) => Number(c.movieId) === Number(card.id));
       if (cardLiked)
         movieId = cardLiked._id;
       const newCard = await MainApi.changeLikeCardStatus(like, card, movieId);
-      setCardsLiked([...cardsLiked, newCard]);
-      setLike(!like);
+      if (like) {
+        setCardsLiked([...cardsLiked, newCard]);
+        console.log(cardsLiked)
+      } else {
+        setCardsLiked(cardsLiked.filter((c) => c._id !== newCard._id))
+      }
+      localStorage.setItem('moviesSavedApi', JSON.stringify(cardsLiked))
+
     } catch (err) {
       console.log(err);
-      setLike(false);
     }
   }
 
@@ -184,6 +193,7 @@ function App() {
     if (jwt === 'true') {
       setLoggedIn(true);
     }
+    getLikedMoviesApi();
   }, []);
 
   return (
@@ -219,7 +229,6 @@ function App() {
             isPreloaderOn={isPreloaderOn}
             cards={cards}
             handleLike={handleLike}
-            isLike={like}
           >
           </ProtectedRoute>
           <ProtectedRoute

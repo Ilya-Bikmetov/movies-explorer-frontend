@@ -1,27 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { imgUrl } from '../../../utils/constants.js';
+import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 
-function MoviesCard({ card, handleLike, isLike }) {
-  // const [isLiked, setLike] = useState(false);
+function MoviesCard({ card, handleLike }) {
+  const currentUser = useContext(CurrentUserContext);
+  const [isLiked, setLike] = useState(false);
   const [isPointed, setPoint] = useState(false);
   const location = useLocation();
-
-
-  // const changeLike = () => {
-  //   if (isLiked) {
-  //     setLike(false);
-  //     handleLike(false, card);
-  //   } else {
-  //     setLike(true);
-  //     handleLike(false, card);
-  //   }
-
-  // }
-
-  const changeLike = () => {
-    handleLike(card);
+  const isLikedApi = JSON.parse(localStorage.getItem('moviesSavedApi')).some((c) => c.owner._id === currentUser.id);
+  const changeLike = async () => {
+    try {
+      if (isLiked) {
+        await handleLike(false, card);
+        setLike(false);
+      } else {
+        await handleLike(true, card);
+        setLike(true)
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
+
+  // useEffect(() => {
+  //   if (isLikedApi)
+  //     setLike(true);
+  // }, [])
+
   return (
     <li className="movie">
       <a href={card.trailerLink} className="movie__trailer" target="blank">
@@ -32,7 +38,7 @@ function MoviesCard({ card, handleLike, isLike }) {
         <>
           <div className="movie__sign">
             <h2 className="movie__title">{card.nameRU}</h2>
-            <button onClick={changeLike} className={`movie__like ${isLike && 'movie__like_active'}`} type="button" aria-label="Поставить лайк" />
+            <button onClick={changeLike} className={`movie__like ${isLiked && 'movie__like_active'}`} type="button" aria-label="Поставить лайк" />
           </div>
           <p className="movie__duration">{Math.floor(card.duration / 60)} ч {Math.floor(card.duration % 60)} м</p>
         </>

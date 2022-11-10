@@ -61,7 +61,7 @@ export const getContent = () => {
 }
 
 export const changeLikeCardStatus = (isLiked, card, movieId) => {
-  if (!isLiked) {
+  if (isLiked) {
     return fetch(`${baseUrlMainApi}movies`, {
       method: 'POST',
       headers,
@@ -83,7 +83,7 @@ export const changeLikeCardStatus = (isLiked, card, movieId) => {
     })
       .then(checkResponse)
   } else {
-    return fetch(`${baseUrlMainApi}${movieId}`, {
+    return fetch(`${baseUrlMainApi}movies/${movieId}`, {
       method: 'DELETE',
       headers,
       credentials: "include",
