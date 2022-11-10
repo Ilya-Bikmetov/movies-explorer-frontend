@@ -15,7 +15,7 @@ function MoviesCard({ card, handleLike }) {
   }
 
   useEffect(() => {
-    setLike(JSON.parse(localStorage.getItem('moviesSavedApi')).some((c) => (c.owner._id === currentUser.id && Number(c.movieId) === Number(card.id))));
+    setLike(JSON.parse(localStorage.getItem('moviesSavedApi')).some((c) => (Number(c.movieId) === Number(card.id))));
   }, [])
 
   return (
