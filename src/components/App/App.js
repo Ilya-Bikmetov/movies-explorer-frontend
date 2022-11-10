@@ -26,13 +26,14 @@ function App() {
   let moviesSaved = [];
   const [cards, setCards] = useState([]);
   const [cardsLiked, setCardsLiked] = useState([]);
-  const [isPreloaderOn, setPreloaderState] = useState(false);
+  const [isPreloaderOn, setPreloaderState] = useState(true);
   const [isNavPanelOpen, setNavPanelOpen] = useState(false);
   const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
   const [isRegSuccess, setRegSuccess] = useState(false);
   const [isRegIssue, setRegIssue] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '', id: '' });
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isFindMessageOn, setFindMessage] = useState(false);
   const history = useHistory();
 
   const closeNavPanel = () => setNavPanelOpen(false);
@@ -74,6 +75,7 @@ function App() {
 
   const findMovies = ({ movie }) => {
     let movieSame = false;
+    setFindMessage(false);
     const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
     if (typeof (localStorage.moviesFound) !== 'undefined') {
       moviesSaved = JSON.parse(localStorage.getItem('moviesFound'));
@@ -85,15 +87,18 @@ function App() {
       if (moviesFound.length > 0) {
         localStorage.setItem('moviesFound', JSON.stringify(moviesSaved));
         setCards(moviesSaved.reverse());
+      } else {
+        setFindMessage(true);
       }
+      setPreloaderState(false);
     } else {
       console.log('По этому запросу фильмы уже добавлены');
     }
-    setPreloaderState(false);
   }
 
   const renderCards = () => {
     if (typeof (localStorage.moviesFound) !== 'undefined') {
+      setPreloaderState(false);
       setCards(getCurrentCards().reverse());
     }
   }
@@ -113,6 +118,7 @@ function App() {
       await MainApi.signin({ email, password });
       setLoggedIn(true);
       localStorage.setItem('jwt', true);
+      setPreloaderState(true);
     } catch (err) {
       console.log(err);
       setRegIssue(true);
@@ -167,12 +173,10 @@ function App() {
       const newCard = await MainApi.changeLikeCardStatus(like, card, movieId);
       if (like) {
         setCardsLiked([...cardsLiked, newCard]);
-        console.log(cardsLiked)
       } else {
         setCardsLiked(cardsLiked.filter((c) => c._id !== newCard._id))
       }
       localStorage.setItem('moviesSavedApi', JSON.stringify(cardsLiked))
-
     } catch (err) {
       console.log(err);
     }
@@ -195,6 +199,7 @@ function App() {
     }
     getLikedMoviesApi();
   }, []);
+
 
   return (
     <section className="page">
@@ -229,6 +234,7 @@ function App() {
             isPreloaderOn={isPreloaderOn}
             cards={cards}
             handleLike={handleLike}
+            showMessage={isFindMessageOn}
           >
           </ProtectedRoute>
           <ProtectedRoute

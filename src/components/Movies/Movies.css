@@ -1,0 +1,27 @@
+.movies-message {
+  display: none;
+  width: 100%;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 20px;
+  color: #A0A0A0;
+  justify-content: center;
+}
+
+.movies-message_active {
+  display: flex;
+}
+
+@media (min-width: 513px) and (max-width: 911px) {
+  .movies-message {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 201px) and (max-width: 512px) {
+  .movies-message {
+    font-size: 18px;
+  }
+}

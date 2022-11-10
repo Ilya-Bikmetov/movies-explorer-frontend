@@ -8,25 +8,15 @@ function MoviesCard({ card, handleLike }) {
   const [isLiked, setLike] = useState(false);
   const [isPointed, setPoint] = useState(false);
   const location = useLocation();
-  const isLikedApi = JSON.parse(localStorage.getItem('moviesSavedApi')).some((c) => c.owner._id === currentUser.id);
-  const changeLike = async () => {
-    try {
-      if (isLiked) {
-        await handleLike(false, card);
-        setLike(false);
-      } else {
-        await handleLike(true, card);
-        setLike(true)
-      }
-    } catch (err) {
-      console.log(err);
-    }
+
+
+  const changeLike = () => {
+    handleLike(isLiked, card);
   }
 
-  // useEffect(() => {
-  //   if (isLikedApi)
-  //     setLike(true);
-  // }, [])
+  useEffect(() => {
+    setLike(JSON.parse(localStorage.getItem('moviesSavedApi')).some((c) => (c.owner._id === currentUser.id && Number(c.movieId) === Number(card.id))));
+  }, [])
 
   return (
     <li className="movie">
