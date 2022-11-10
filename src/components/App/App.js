@@ -171,7 +171,7 @@ function App() {
       if (cardLiked)
         movieId = cardLiked._id;
       const newCard = await MainApi.changeLikeCardStatus(like, card, movieId);
-      if (like) {
+      if (!like) {
         setCardsLiked([...cardsLiked, newCard]);
       } else {
         setCardsLiked(cardsLiked.filter((c) => c._id !== newCard._id))
