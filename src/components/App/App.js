@@ -233,6 +233,7 @@ function App() {
             handleSwitcher={handleShortMoviesSwitcher}
             isPreloaderOn={isPreloaderOn}
             cards={cards}
+            cardsLiked={cardsLiked}
             handleLike={handleLike}
             showMessage={isFindMessageOn}
           >
@@ -247,6 +248,7 @@ function App() {
             isSwitcherOn={isShortMoviesOn}
             handleSwitcher={handleShortMoviesSwitcher}
             handleLike={handleLike}
+            cardsLiked={cardsLiked}
           >
           </ProtectedRoute>
           <ProtectedRoute

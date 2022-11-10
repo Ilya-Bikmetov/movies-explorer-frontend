@@ -1,10 +1,8 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { imgUrl } from '../../../utils/constants.js';
-import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 
-function MoviesCard({ card, handleLike }) {
-  const currentUser = useContext(CurrentUserContext);
+function MoviesCard({ card, handleLike, cardsLiked }) {
   const [isLiked, setLike] = useState(false);
   const [isPointed, setPoint] = useState(false);
   const location = useLocation();
@@ -13,6 +11,7 @@ function MoviesCard({ card, handleLike }) {
   const changeLike = () => {
     handleLike(isLiked, card);
   }
+
 
   useEffect(() => {
     setLike(JSON.parse(localStorage.getItem('moviesSavedApi')).some((c) => (Number(c.movieId) === Number(card.id))));
