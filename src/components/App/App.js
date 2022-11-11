@@ -132,6 +132,7 @@ function App() {
       setLoggedIn(false);
       localStorage.removeItem('moviesFound');
       setCards([]);
+      setCardsLiked([]);
     } catch (err) {
       console.log(err);
     }
@@ -161,22 +162,20 @@ function App() {
 
   const getLikedMoviesApi = async () => {
     const moviesLiked = await MainApi.getMoviesLiked();
-    localStorage.setItem('moviesSavedApi', JSON.stringify(moviesLiked));
+    setCardsLiked(moviesLiked);
   }
 
   const handleLike = async (like, card) => {
     try {
       let movieId;
       const cardLiked = cardsLiked.find((c) => Number(c.movieId) === Number(card.id));
-      if (cardLiked)
-        movieId = cardLiked._id;
+      cardLiked
+        ? movieId = cardLiked._id
+        : movieId = card._id
       const newCard = await MainApi.changeLikeCardStatus(like, card, movieId);
-      if (!like) {
-        setCardsLiked([...cardsLiked, newCard]);
-      } else {
-        setCardsLiked(cardsLiked.filter((c) => c._id !== newCard._id))
-      }
-      localStorage.setItem('moviesSavedApi', JSON.stringify(cardsLiked))
+      !like
+        ? setCardsLiked([...cardsLiked, newCard])
+        : setCardsLiked(cardsLiked.filter((c) => c._id !== newCard._id))
     } catch (err) {
       console.log(err);
     }
@@ -188,6 +187,7 @@ function App() {
       renderCards();
       getContent();
       getMoviesLiked();
+      getLikedMoviesApi();
       history.push('movies');
     }
   }, [loggedIn, history]);
@@ -197,7 +197,6 @@ function App() {
     if (jwt === 'true') {
       setLoggedIn(true);
     }
-    getLikedMoviesApi();
   }, []);
 
 

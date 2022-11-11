@@ -1,5 +1,4 @@
 import { useLocation } from 'react-router-dom';
-import MoviesSaved from '../MoviesSaved/MoviesSaved.js';
 import MoviesCard from './MoviesCard/MoviesCard.js';
 
 function MoviesCardList({ cards, cardsLiked, isOn, handleLike }) {
