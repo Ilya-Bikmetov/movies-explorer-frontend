@@ -64,15 +64,6 @@ function App() {
     }
   }
 
-  const getMoviesLiked = async () => {
-    try {
-      const moviesLiked = await MainApi.getMoviesLiked();
-      moviesLiked.length > 0 && localStorage.setItem('moviesLiked', JSON.stringify(moviesLiked));
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   const findMovies = ({ movie }) => {
     let movieSame = false;
     setFindMessage(false);
@@ -186,7 +177,6 @@ function App() {
       getMovies();
       renderCards();
       getContent();
-      getMoviesLiked();
       getLikedMoviesApi();
       history.push('movies');
     }

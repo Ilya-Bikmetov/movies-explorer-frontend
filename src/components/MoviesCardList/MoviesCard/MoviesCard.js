@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { imgUrl } from '../../../utils/constants.js';
 
 function MoviesCard({ card, handleLike, cardsLiked }) {
   const [isLiked, setLike] = useState(false);
   const [isPointed, setPoint] = useState(false);
   const location = useLocation();
+  const history = useHistory();
 
   const changeLike = () => handleLike(isLiked, card);
 
   useEffect(() => {
     setLike(cardsLiked.some((c) => (Number(c.movieId) === Number(card.id))));
-  }, [])
+  }, [card, history, cardsLiked])
 
   return (
     <li className="movie">
