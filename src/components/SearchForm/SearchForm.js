@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher }) {
+function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher, onSumbitSaved }) {
   const [inputData, setInputData] = useState({ movie: '' });
+  const location = useLocation();
 
   const changeSwitchCondition = () => handleSwitcher(!isSwitcherOn);
 
@@ -19,14 +21,22 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher 
     onSubmit({ movie: inputData.movie });
     setInputData({ movie: '' });
   }
-
-
+  const submitSearchSaved = (e) => {
+    e.preventDefault();
+    setPreloaderState(true);
+    onSumbitSaved({ movie: inputData.movie });
+    setInputData({ movie: '' });
+  }
 
   return (
     <section className="search-form">
       <div className="search-form__container">
         <div className="search-logo" />
-        <form onSubmit={submitSearch} className="form-movies">
+        <form onSubmit={
+          location.pathname === "/saved-movies"
+            ? submitSearchSaved
+            : submitSearch
+        } className="form-movies">
           <input
             className="search-form__input"
             name="movie"

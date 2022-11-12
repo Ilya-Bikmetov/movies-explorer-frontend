@@ -14,7 +14,7 @@ function Movies({ onOpen, onSubmit, setPreloaderState, isSwitcherOn, handleLike,
         isSwitcherOn={isSwitcherOn}
         handleSwitcher={handleSwitcher}
       />
-      <h2 className={`movies-message ${showMessage && 'movies-message_active'}`}>Ничего не найдено</h2>
+      <h2 className={`movies-message ${showMessage.state && 'movies-message_active'}`}>{showMessage.message}</h2>
       <Preloader
         isOn={isPreloaderOn}
       />

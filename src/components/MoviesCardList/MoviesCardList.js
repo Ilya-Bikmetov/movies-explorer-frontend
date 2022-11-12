@@ -28,7 +28,11 @@ function MoviesCardList({ cards, cardsLiked, isOn, handleLike }) {
           ))
         }
       </ul>
-      <div className='movies__btn-container'>
+      <div className="movies__btn-container" style={
+        location.pathname === "/saved-movies"
+        ? {display: "none"}
+        : {display: "flex"}
+      }>
         <button className='movies__btn' type='button' aria-label="Ещё">Ещё</button>
       </div>
     </section>

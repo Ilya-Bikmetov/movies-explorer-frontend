@@ -23,7 +23,6 @@ import Navigation from '../Navigation/Navigation';
 
 
 function App() {
-  let moviesSaved = [];
   const [cards, setCards] = useState([]);
   const [cardsLiked, setCardsLiked] = useState([]);
   const [isPreloaderOn, setPreloaderState] = useState(true);
@@ -33,7 +32,7 @@ function App() {
   const [isRegIssue, setRegIssue] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '', id: '' });
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isFindMessageOn, setFindMessage] = useState(false);
+  const [isFindMessageOn, setFindMessage] = useState({ state: false, message: '' });
   const history = useHistory();
 
   const closeNavPanel = () => setNavPanelOpen(false);
@@ -65,6 +64,7 @@ function App() {
   }
 
   const findMovies = ({ movie }) => {
+    let moviesSaved = [];
     let movieSame = false;
     setFindMessage(false);
     const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
@@ -79,12 +79,34 @@ function App() {
         localStorage.setItem('moviesFound', JSON.stringify(moviesSaved));
         setCards(moviesSaved.reverse());
       } else {
-        setFindMessage(true);
+        setFindMessage({ state: true, message: 'Ничего не найдено' });
       }
-      setPreloaderState(false);
     } else {
-      console.log('По этому запросу фильмы уже добавлены');
+      setFindMessage({ state: true, message: 'По этому запросу фильмы уже добавлены' });
     }
+    setPreloaderState(false);
+  }
+
+  const findSavedMovies = ({ movie }) => {
+    let movieSame = false;
+    movieSame = cardsLiked.some((item) => item.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
+    if (!movieSame) {
+      const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
+      const moviesFound = moviesLoaded.filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
+      if (moviesFound.length > 0) {
+        moviesFound.forEach(async (c) => {
+          try {
+            const newCard = await MainApi.changeLikeCardStatus(false, c, false);
+            setCardsLiked([newCard, ...cardsLiked]);
+          } catch (err) {
+            console.log(err);
+          }
+        });
+      }
+    } else {
+      console.log('Фильм уже добавили');
+    }
+    setPreloaderState(false);
   }
 
   const renderCards = () => {
@@ -124,6 +146,7 @@ function App() {
       localStorage.removeItem('moviesFound');
       setCards([]);
       setCardsLiked([]);
+      setFindMessage({ state: false, message: '' });
     } catch (err) {
       console.log(err);
     }
@@ -238,6 +261,7 @@ function App() {
             handleSwitcher={handleShortMoviesSwitcher}
             handleLike={handleLike}
             cardsLiked={cardsLiked}
+            onSumbitSaved={findSavedMovies}
           >
           </ProtectedRoute>
           <ProtectedRoute
