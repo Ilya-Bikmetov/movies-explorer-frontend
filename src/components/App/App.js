@@ -88,24 +88,8 @@ function App() {
   }
 
   const findSavedMovies = ({ movie }) => {
-    let movieSame = false;
-    movieSame = cardsLiked.some((item) => item.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
-    if (!movieSame) {
-      const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
-      const moviesFound = moviesLoaded.filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
-      if (moviesFound.length > 0) {
-        moviesFound.forEach(async (c) => {
-          try {
-            const newCard = await MainApi.changeLikeCardStatus(false, c, false);
-            setCardsLiked([newCard, ...cardsLiked]);
-          } catch (err) {
-            console.log(err);
-          }
-        });
-      }
-    } else {
-      console.log('Фильм уже добавили');
-    }
+    const moviesSavedFound = JSON.parse(localStorage.getItem('moviesLiked')).filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
+    setCardsLiked(moviesSavedFound);
     setPreloaderState(false);
   }
 
@@ -176,7 +160,8 @@ function App() {
 
   const getLikedMoviesApi = async () => {
     const moviesLiked = await MainApi.getMoviesLiked();
-    setCardsLiked(moviesLiked);
+    localStorage.setItem('moviesLiked', JSON.stringify(moviesLiked));
+    setCardsLiked(moviesLiked.reverse());
   }
 
   const handleLike = async (like, card) => {
@@ -187,9 +172,15 @@ function App() {
         ? movieId = cardLiked._id
         : movieId = card._id
       const newCard = await MainApi.changeLikeCardStatus(like, card, movieId);
-      !like
-        ? setCardsLiked([...cardsLiked, newCard])
-        : setCardsLiked(cardsLiked.filter((c) => c._id !== newCard._id))
+      if (!like) {
+        setCardsLiked([newCard, ...cardsLiked]);
+        localStorage.setItem('moviesLiked', JSON.stringify(cardsLiked));
+      } else {
+        setCardsLiked(cardsLiked.filter((c) => c._id !== newCard._id));
+        const moviesLiked = JSON.parse(localStorage.getItem('moviesLiked')).filter((c) => Number(c.movieId) !== Number(newCard.movieId));
+        localStorage.setItem('moviesLiked', JSON.stringify(moviesLiked));
+        console.log(moviesLiked)
+      }
     } catch (err) {
       console.log(err);
     }
