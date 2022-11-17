@@ -21,7 +21,6 @@ import * as MoviesApi from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Navigation from '../Navigation/Navigation';
 
-
 function App() {
   const [cards, setCards] = useState([]);
   const [cardsLiked, setCardsLiked] = useState([]);
@@ -38,18 +37,24 @@ function App() {
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
   const getCurrentCards = () => JSON.parse(localStorage.getItem('moviesFound'));
+  const getCurrentLikedCards = () => JSON.parse(localStorage.getItem('moviesLiked'));
   const closeNotices = () => {
     isRegSuccess && setRegSuccess(false);
     isRegIssue && setRegIssue(false);
   }
   const handleShortMoviesSwitcher = (state) => {
-    setShortMoviesSwitcher(state);
-    if (state) {
-      const currentCards = getCurrentCards();
-      const shortMovieCards = currentCards.filter((card) => card.duration <= 40);
+    if (state === true) {
+      const shortMovieLikedCards = getCurrentLikedCards().filter((card) => card.duration <= 40);
+      const shortMovieCards = getCurrentCards().filter((card) => card.duration <= 40);
       setCards(shortMovieCards.reverse());
+      setCardsLiked(shortMovieLikedCards);
+      localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
+      setShortMoviesSwitcher(state);
     } else {
       setCards(getCurrentCards().reverse());
+      setCardsLiked(getCurrentLikedCards);
+      localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
+      setShortMoviesSwitcher(state);
     }
   };
 
@@ -179,7 +184,6 @@ function App() {
         setCardsLiked(cardsLiked.filter((c) => c._id !== newCard._id));
         const moviesLiked = JSON.parse(localStorage.getItem('moviesLiked')).filter((c) => Number(c.movieId) !== Number(newCard.movieId));
         localStorage.setItem('moviesLiked', JSON.stringify(moviesLiked));
-        console.log(moviesLiked)
       }
     } catch (err) {
       console.log(err);
@@ -192,8 +196,11 @@ function App() {
       renderCards();
       getContent();
       getLikedMoviesApi();
+
       history.push('movies');
     }
+    handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
+    setShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
   }, [loggedIn, history]);
 
   useEffect(() => {
