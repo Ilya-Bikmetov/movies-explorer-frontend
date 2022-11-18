@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher, onSumbitSaved }) {
   const [inputData, setInputData] = useState({ movie: '' });
+  const [inputDataSaved, setInputDataSaved] = useState({ movie: '' });
   const location = useLocation();
 
   const changeSwitchCondition = () => handleSwitcher(!isSwitcherOn);
@@ -11,6 +12,14 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher,
     const { name, value } = e.target;
     setInputData({
       ...inputData,
+      [name]: value
+    });
+  }
+
+  const handleInputChangeSaved = (e) => {
+    const { name, value } = e.target;
+    setInputDataSaved({
+      ...inputDataSaved,
       [name]: value
     });
   }
@@ -24,9 +33,17 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher,
   const submitSearchSaved = (e) => {
     e.preventDefault();
     setPreloaderState(true);
-    onSumbitSaved({ movie: inputData.movie });
+    onSumbitSaved({ movie: inputDataSaved.movie });
     setInputData({ movie: '' });
   }
+
+  useEffect(() => {
+    if (typeof (localStorage.searchField) !== 'undefined') {
+      setInputData({ movie: JSON.parse(localStorage.getItem('searchField')) });
+    }
+
+  }, [])
+
 
   return (
     <section className="search-form">
@@ -43,8 +60,16 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher,
             placeholder="Фильм"
             type="movie"
             required
-            onChange={handleInputChange}
-            value={inputData.movie}
+            onChange={
+              location.pathname === "/saved-movies"
+                ? handleInputChangeSaved
+                : handleInputChange
+            }
+            value={
+              location.pathname === "/saved-movies"
+                ? inputDataSaved.movie
+                : inputData.movie
+            }
           />
           <button className="search-form__button" type="submit" aria-label="Поиск фильмов" />
           <div className="search-form__separator" />

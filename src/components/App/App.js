@@ -75,6 +75,7 @@ function App() {
     let moviesSaved = [];
     let movieSame = false;
     setFindMessage(false);
+    localStorage.setItem('searchField', JSON.stringify(movie));
     const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
     if (typeof (localStorage.moviesFound) !== 'undefined') {
       moviesSaved = JSON.parse(localStorage.getItem('moviesFound'));
