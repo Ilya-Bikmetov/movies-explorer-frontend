@@ -47,11 +47,13 @@ function App() {
   const handleShortMoviesSwitcher = (state) => {
     if (state === true) {
       // const shortMovieLikedCards = getCurrentLikedCards().filter((card) => card.duration <= 40);
-      const shortMovieCards = getCurrentCards().filter((card) => card.duration <= 40);
-      setCards(shortMovieCards.reverse());
-      // setCardsLiked(shortMovieLikedCards);
-      localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
-      setShortMoviesSwitcher(state);
+      if (typeof (localStorage.moviesFound) !== 'undefined') {
+        const shortMovieCards = getCurrentCards().filter((card) => card.duration <= 40);
+        setCards(shortMovieCards.reverse());
+        // setCardsLiked(shortMovieLikedCards);
+        localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
+        setShortMoviesSwitcher(state);
+      }
     } else {
       if (typeof (localStorage.moviesFound) !== 'undefined') {
         setCards(getCurrentCards().reverse());
@@ -146,12 +148,12 @@ function App() {
   const handleSignout = async () => {
     try {
       await MainApi.clearJwtCookie();
-      localStorage.setItem('jwt', false);
       setLoggedIn(false);
-      localStorage.removeItem('moviesFound');
+      localStorage.clear();
       setCards([]);
       setCardsLiked([]);
       setFindMessage({ state: false, message: '' });
+      setShortMoviesSwitcher(false);
       window.removeEventListener('resize', handleCardsRender);
     } catch (err) {
       console.log(err);
