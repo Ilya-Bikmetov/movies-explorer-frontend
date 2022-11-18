@@ -27,6 +27,7 @@ function App() {
   const [isPreloaderOn, setPreloaderState] = useState(true);
   const [isNavPanelOpen, setNavPanelOpen] = useState(false);
   const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
+  const [isShortMoviesSavedOn, setShortMoviesSavedSwitcher] = useState(false);
   const [isRegSuccess, setRegSuccess] = useState(false);
   const [isRegIssue, setRegIssue] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '', id: '' });
@@ -45,19 +46,30 @@ function App() {
   }
   const handleShortMoviesSwitcher = (state) => {
     if (state === true) {
-      const shortMovieLikedCards = getCurrentLikedCards().filter((card) => card.duration <= 40);
+      // const shortMovieLikedCards = getCurrentLikedCards().filter((card) => card.duration <= 40);
       const shortMovieCards = getCurrentCards().filter((card) => card.duration <= 40);
       setCards(shortMovieCards.reverse());
-      setCardsLiked(shortMovieLikedCards);
+      // setCardsLiked(shortMovieLikedCards);
       localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
       setShortMoviesSwitcher(state);
     } else {
       if (typeof (localStorage.moviesFound) !== 'undefined') {
         setCards(getCurrentCards().reverse());
-        setCardsLiked(getCurrentLikedCards);
+        // setCardsLiked(getCurrentLikedCards);
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
         setShortMoviesSwitcher(state);
       }
+    }
+  };
+
+  const handleShortMoviesSavedSwitcher = (state) => {
+    if (state === true) {
+      const shortMovieLikedCards = getCurrentLikedCards().filter((card) => card.duration <= 40);
+      setCardsLiked(shortMovieLikedCards);
+      setShortMoviesSavedSwitcher(state);
+    } else {
+      setCardsLiked(getCurrentLikedCards);
+      setShortMoviesSavedSwitcher(state);
     }
   };
 
@@ -289,6 +301,8 @@ function App() {
             setPreloaderState={setPreloaderState}
             isSwitcherOn={isShortMoviesOn}
             handleSwitcher={handleShortMoviesSwitcher}
+            isSwitcherSavedOn={isShortMoviesSavedOn}
+            handleSwitcherSaved={handleShortMoviesSavedSwitcher}
             handleLike={handleLike}
             cardsLiked={cardsLiked}
             setCardsLiked={setCardsLiked}

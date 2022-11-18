@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher, onSumbitSaved }) {
+function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher, onSumbitSaved, isSwitcherSavedOn, handleSwitcherSaved }) {
   const [inputData, setInputData] = useState({ movie: '' });
   const [inputDataSaved, setInputDataSaved] = useState({ movie: '' });
   const location = useLocation();
 
   const changeSwitchCondition = () => handleSwitcher(!isSwitcherOn);
+  const changeSwitchConditionSaved = () => handleSwitcherSaved(!isSwitcherSavedOn);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,11 +31,12 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher,
     onSubmit({ movie: inputData.movie });
     setInputData({ movie: '' });
   }
+
   const submitSearchSaved = (e) => {
     e.preventDefault();
     setPreloaderState(true);
     onSumbitSaved({ movie: inputDataSaved.movie });
-    setInputData({ movie: '' });
+    setInputDataSaved({ movie: '' });
   }
 
   useEffect(() => {
@@ -73,14 +75,36 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher,
           />
           <button className="search-form__button" type="submit" aria-label="Поиск фильмов" />
           <div className="search-form__separator" />
-          <button onClick={changeSwitchCondition} className={`switcher ${isSwitcherOn && 'switcher_on'}`} type="button" aria-label="Переключатель">
+          <button onClick={
+            location.pathname === "/saved-movies"
+              ? changeSwitchConditionSaved
+              : changeSwitchCondition
+          }
+            className={
+
+              location.pathname === "/saved-movies"
+                ? `switcher ${isSwitcherSavedOn && 'switcher_on'}`
+                : `switcher ${isSwitcherOn && 'switcher_on'}`
+            }
+            type="button" aria-label="Переключатель">
             <div className="switcher__circle" />
           </button>
           <p className="search-form__text">Короткометражки</p>
         </form>
       </div>
       <div className="search-form__swtich-container">
-        <button onClick={changeSwitchCondition} className={`switcher switcher_mobile ${isSwitcherOn && 'switcher_on'}`} type="button" aria-label="Переключатель">
+        <button onClick={
+          location.pathname === "/saved-movies"
+            ? changeSwitchConditionSaved
+            : changeSwitchCondition
+        }
+          className={
+            location.pathname === "/saved-movies"
+            ? `switcher switcher_mobile ${isSwitcherSavedOn && 'switcher_on'}`
+            : `switcher switcher_mobile ${isSwitcherOn && 'switcher_on'}`
+
+          }
+          type="button" aria-label="Переключатель">
           <div className="switcher__circle" />
         </button>
         <p className="search-form__text search-form__text_mobile">Короткометражки</p>
