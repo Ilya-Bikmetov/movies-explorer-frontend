@@ -2,7 +2,7 @@ import './App.css';
 import Header from '../Header/Header.js';
 import Footer from '../Footer/Footer.js';
 import { useState, useEffect } from 'react';
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import Promo from "../Promo/Promo.js";
 import AboutProject from "../AboutProject/AboutProject.js";
 import Techs from "../Techs/Techs.js";
@@ -33,6 +33,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isFindMessageOn, setFindMessage] = useState({ state: false, message: '' });
   const history = useHistory();
+  const location = useLocation();
 
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
@@ -51,10 +52,12 @@ function App() {
       localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
       setShortMoviesSwitcher(state);
     } else {
-      setCards(getCurrentCards().reverse());
-      setCardsLiked(getCurrentLikedCards);
-      localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
-      setShortMoviesSwitcher(state);
+      if (typeof (localStorage.moviesFound) !== 'undefined') {
+        setCards(getCurrentCards().reverse());
+        setCardsLiked(getCurrentLikedCards);
+        localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
+        setShortMoviesSwitcher(state);
+      }
     }
   };
 
@@ -136,6 +139,7 @@ function App() {
       setCards([]);
       setCardsLiked([]);
       setFindMessage({ state: false, message: '' });
+      window.removeEventListener('resize', handleCardsRender);
     } catch (err) {
       console.log(err);
     }
@@ -179,7 +183,9 @@ function App() {
       const newCard = await MainApi.changeLikeCardStatus(like, card, movieId);
       if (!like) {
         setCardsLiked([newCard, ...cardsLiked]);
-        localStorage.setItem('moviesLiked', JSON.stringify(cardsLiked));
+        let moviesLiked = JSON.parse(localStorage.getItem('moviesLiked'));
+        moviesLiked.push(newCard);
+        localStorage.setItem('moviesLiked', JSON.stringify(moviesLiked));
       } else {
         setCardsLiked(cardsLiked.filter((c) => c._id !== newCard._id));
         const moviesLiked = JSON.parse(localStorage.getItem('moviesLiked')).filter((c) => Number(c.movieId) !== Number(newCard.movieId));
@@ -190,23 +196,47 @@ function App() {
     }
   }
 
+  const handleBtnMore = () => {
+
+  }
+
+  const handleCardsRender = () => {
+    if (window.innerWidth > 1280) {
+      // console.log('Ширина больше 1280px');
+
+
+    }
+    if (window.innerWidth > 769 && window.innerWidth < 1280)
+      console.log('Ширина меньше 1280px');
+    if (window.innerWidth > 480 && window.innerWidth < 768)
+      console.log('Ширина меньше 768px');
+    if (window.innerWidth < 480)
+      console.log('Ширина меньше 480px');
+  }
+
   useEffect(() => {
     if (loggedIn) {
       getMovies();
       renderCards();
       getContent();
       getLikedMoviesApi();
-
       history.push('movies');
+      handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
+      setShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
     }
-    handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
-    setShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
   }, [loggedIn, history]);
+
+  useEffect(() => {
+    if (location.pathname === "/saved-movies") {
+      setCardsLiked(JSON.parse(localStorage.getItem('moviesLiked')).reverse());
+    }
+  }, [location])
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt === 'true') {
       setLoggedIn(true);
+      window.addEventListener('resize', handleCardsRender);
     }
   }, []);
 
@@ -246,6 +276,7 @@ function App() {
             cardsLiked={cardsLiked}
             handleLike={handleLike}
             showMessage={isFindMessageOn}
+            handleBtnMore={handleBtnMore}
           >
           </ProtectedRoute>
           <ProtectedRoute
@@ -259,6 +290,7 @@ function App() {
             handleSwitcher={handleShortMoviesSwitcher}
             handleLike={handleLike}
             cardsLiked={cardsLiked}
+            setCardsLiked={setCardsLiked}
             onSumbitSaved={findSavedMovies}
           >
           </ProtectedRoute>

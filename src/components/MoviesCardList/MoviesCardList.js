@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import MoviesCard from './MoviesCard/MoviesCard.js';
 
-function MoviesCardList({ cards, cardsLiked, isOn, handleLike }) {
+function MoviesCardList({ cards, cardsLiked, setCardsLiked, isOn, handleLike, handleBtnMore }) {
   const location = useLocation();
 
   return (
@@ -24,16 +24,17 @@ function MoviesCardList({ cards, cardsLiked, isOn, handleLike }) {
               card={card}
               handleLike={handleLike}
               cardsLiked={cardsLiked}
+              setCardsLiked={setCardsLiked}
             />
           ))
         }
       </ul>
       <div className="movies__btn-container" style={
         location.pathname === "/saved-movies"
-        ? {display: "none"}
-        : {display: "flex"}
+          ? { display: "none" }
+          : { display: "flex" }
       }>
-        <button className='movies__btn' type='button' aria-label="Ещё">Ещё</button>
+        <button onClick={handleBtnMore} className='movies__btn' type='button' aria-label="Ещё">Ещё</button>
       </div>
     </section>
   );

@@ -2,7 +2,7 @@ import Navigation from "../Navigation/Navigation.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
 
-function MoviesSaved({ onOpen, onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher, cardsLiked, handleLike, onSumbitSaved }) {
+function MoviesSaved({ onOpen, onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher, cardsLiked, setCardsLiked, handleLike, onSumbitSaved }) {
   return (
     <>
       <Navigation
@@ -17,6 +17,7 @@ function MoviesSaved({ onOpen, onSubmit, setPreloaderState, isSwitcherOn, handle
       />
       <MoviesCardList
         cardsLiked={cardsLiked}
+        setCardsLiked={setCardsLiked}
         handleLike={handleLike}
       />
     </>
