@@ -50,14 +50,14 @@ function App() {
     if (state === true) {
       if (typeof (localStorage.moviesFound) !== 'undefined') {
         const shortMovieCards = getCurrentCards().filter((card) => card.duration <= 40);
-        setCards(shortMovieCards.reverse().slice(0, countRenderCards));
+        setCards(shortMovieCards.slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
         setShortMoviesSwitcher(state);
       }
     }
     else {
       if (typeof (localStorage.moviesFound) !== 'undefined') {
-        setCards(getCurrentCards().reverse().slice(0, countRenderCards));
+        setCards(getCurrentCards().slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
         setShortMoviesSwitcher(state);
       }
@@ -86,27 +86,16 @@ function App() {
   }
 
   const findMovies = ({ movie }) => {
-    let moviesSaved = [];
-    let movieSame = false;
     setFindMessage(false);
     localStorage.setItem('searchField', JSON.stringify(movie));
-    const moviesLoaded = JSON.parse(localStorage.getItem('movies'));
-    if (typeof (localStorage.moviesFound) !== 'undefined') {
-      moviesSaved = JSON.parse(localStorage.getItem('moviesFound'));
-      movieSame = moviesSaved.some((item) => item.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()))
-    }
-    if (!movieSame) {
-      const moviesFound = moviesLoaded.filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
-      moviesFound.forEach((item) => moviesSaved.push(item))
-      if (moviesFound.length > 0) {
-        localStorage.setItem('moviesFound', JSON.stringify(moviesSaved));
-        setCards(moviesSaved.reverse().slice(0, countRenderCards));
-        handleCardsRender();
-      } else {
-        setFindMessage({ state: true, message: 'Ничего не найдено' });
-      }
+    const movies = JSON.parse(localStorage.getItem('movies'));
+    const moviesFound = movies.filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
+    if (moviesFound.length > 0) {
+      localStorage.setItem('moviesFound', JSON.stringify(moviesFound))
+      setCards(moviesFound.slice(0, countRenderCards));
     } else {
-      setFindMessage({ state: true, message: 'По этому запросу фильмы уже добавлены' });
+      setFindMessage({ state: true, message: 'Ничего не найдено' });
+      setCards([]);
     }
     setPreloaderState(false);
   }
@@ -207,7 +196,6 @@ function App() {
 
   const handleBtnMore = (count) => {
     setCountRenderCards(count);
-    // renderCards();
     countRenderCards > JSON.parse(localStorage.getItem('moviesFound')).length && setBtnMoreState(false);
   }
 
@@ -256,6 +244,10 @@ function App() {
       history.push('movies');
       handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
       setShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
+      if (typeof (localStorage.moviesFound) !== 'undefined') {
+
+        JSON.parse(localStorage.getItem('moviesFound')).length === 0 && setFindMessage({ state: true, message: 'Ничего не найдено' })
+      }
     }
   }, [loggedIn, history]);
 
