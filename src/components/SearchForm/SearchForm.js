@@ -29,14 +29,13 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher,
     e.preventDefault();
     setPreloaderState(true);
     onSubmit({ movie: inputData.movie });
-    setInputData({ movie: '' });
   }
 
   const submitSearchSaved = (e) => {
     e.preventDefault();
     setPreloaderState(true);
     onSumbitSaved({ movie: inputDataSaved.movie });
-    setInputDataSaved({ movie: '' });
+    // setInputDataSaved({ movie: '' });
   }
 
   useEffect(() => {
