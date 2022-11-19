@@ -101,6 +101,7 @@ function App() {
       if (moviesFound.length > 0) {
         localStorage.setItem('moviesFound', JSON.stringify(moviesSaved));
         setCards(moviesSaved.reverse().slice(0, countRenderCards));
+        handleCardsRender();
       } else {
         setFindMessage({ state: true, message: 'Ничего не найдено' });
       }
@@ -206,6 +207,8 @@ function App() {
 
   const handleBtnMore = (count) => {
     setCountRenderCards(count);
+    // renderCards();
+    countRenderCards > JSON.parse(localStorage.getItem('moviesFound')).length && setBtnMoreState(false);
   }
 
   const renderCards = () => {
@@ -213,18 +216,35 @@ function App() {
       setPreloaderState(false);
       handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
       setShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
-      // setCards(getCurrentCards().reverse().slice(0, countRenderCards));
     }
   }
 
-
   const handleCardsRender = () => {
-    if (window.innerWidth >= 1280)
-      setCountRenderCards(3);
-    if (window.innerWidth > 480 && window.innerWidth < 1280)
-      setCountRenderCards(2)
-    if (window.innerWidth <= 480)
-      setCountRenderCards(1);
+    if (window.innerWidth >= 1280) {
+      setCountRenderCards(12);
+      if (typeof (localStorage.moviesFound) !== 'undefined') {
+        JSON.parse(localStorage.getItem('moviesFound')).length <= 3
+          ? setBtnMoreState(false)
+          : setBtnMoreState(true)
+      }
+    }
+    if (window.innerWidth > 480 && window.innerWidth < 1280) {
+      setCountRenderCards(8);
+      if (typeof (localStorage.moviesFound) !== 'undefined') {
+        JSON.parse(localStorage.getItem('moviesFound')).length <= 2
+          ? setBtnMoreState(false)
+          : setBtnMoreState(true)
+      }
+    }
+    if (window.innerWidth <= 480) {
+      setCountRenderCards(5);
+      if (typeof (localStorage.moviesFound) !== 'undefined') {
+        JSON.parse(localStorage.getItem('moviesFound')).length <= 1
+          ? setBtnMoreState(false)
+          : setBtnMoreState(true)
+
+      }
+    }
   }
 
   useEffect(() => {
@@ -254,15 +274,17 @@ function App() {
   }, []);
 
   useEffect(() => {
-    renderCards();
-    JSON.parse(localStorage.getItem('moviesFound')).length === countRenderCards && setBtnMoreState(false);
+    if (typeof (localStorage.moviesFound) !== 'undefined') {
+      renderCards();
+      JSON.parse(localStorage.getItem('moviesFound')).length === countRenderCards && setBtnMoreState(false);
+      countRenderCards > JSON.parse(localStorage.getItem('moviesFound')).length && setBtnMoreState(false);
+    }
   }, [countRenderCards]);
 
 
   return (
     <section className="page">
       <CurrentUserContext.Provider value={currentUser}>
-
         <Switch>
           <Route exact path="/">
             {

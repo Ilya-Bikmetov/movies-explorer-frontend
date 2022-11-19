@@ -1,10 +1,8 @@
 import { useLocation } from 'react-router-dom';
-// import { useState, useEffect } from 'react';
 import MoviesCard from './MoviesCard/MoviesCard.js';
 
 function MoviesCardList({ cards, cardsLiked, setCardsLiked, isOn, handleLike, handleBtnMore, countRenderCards, isBtnMoreOn }) {
   const location = useLocation();
-  // const [isBtnMoreOn, setBtnMoreState] = useState(true);
 
   const handleMoreBtn = () => {
     if (window.innerWidth >= 1280)
@@ -12,12 +10,8 @@ function MoviesCardList({ cards, cardsLiked, setCardsLiked, isOn, handleLike, ha
     if (window.innerWidth > 480 && window.innerWidth < 1280)
       handleBtnMore(countRenderCards + 2)
     if (window.innerWidth <= 480)
-      handleBtnMore(countRenderCards + 1);
+      handleBtnMore(countRenderCards + 2);
   }
-
-  // useEffect(() => {
-  //   JSON.parse(localStorage.getItem('moviesFound')).length === countRenderCards && setBtnMoreState(false);
-  // }, [countRenderCards]);
 
   return (
     <section className={`movies ${isOn && 'movies_disabled'}`}>
