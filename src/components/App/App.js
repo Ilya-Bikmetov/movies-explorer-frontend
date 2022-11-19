@@ -33,6 +33,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '', id: '' });
   const [loggedIn, setLoggedIn] = useState(false);
   const [isFindMessageOn, setFindMessage] = useState({ state: false, message: '' });
+  const [countRenderCards, setCountRenderCards] = useState(0);
+  const [isBtnMoreOn, setBtnMoreState] = useState(true);
   const history = useHistory();
   const location = useLocation();
 
@@ -46,18 +48,16 @@ function App() {
   }
   const handleShortMoviesSwitcher = (state) => {
     if (state === true) {
-      // const shortMovieLikedCards = getCurrentLikedCards().filter((card) => card.duration <= 40);
       if (typeof (localStorage.moviesFound) !== 'undefined') {
         const shortMovieCards = getCurrentCards().filter((card) => card.duration <= 40);
-        setCards(shortMovieCards.reverse());
-        // setCardsLiked(shortMovieLikedCards);
+        setCards(shortMovieCards.reverse().slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
         setShortMoviesSwitcher(state);
       }
-    } else {
+    }
+    else {
       if (typeof (localStorage.moviesFound) !== 'undefined') {
-        setCards(getCurrentCards().reverse());
-        // setCardsLiked(getCurrentLikedCards);
+        setCards(getCurrentCards().reverse().slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
         setShortMoviesSwitcher(state);
       }
@@ -100,7 +100,7 @@ function App() {
       moviesFound.forEach((item) => moviesSaved.push(item))
       if (moviesFound.length > 0) {
         localStorage.setItem('moviesFound', JSON.stringify(moviesSaved));
-        setCards(moviesSaved.reverse());
+        setCards(moviesSaved.reverse().slice(0, countRenderCards));
       } else {
         setFindMessage({ state: true, message: 'Ничего не найдено' });
       }
@@ -114,13 +114,6 @@ function App() {
     const moviesSavedFound = JSON.parse(localStorage.getItem('moviesLiked')).filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
     setCardsLiked(moviesSavedFound);
     setPreloaderState(false);
-  }
-
-  const renderCards = () => {
-    if (typeof (localStorage.moviesFound) !== 'undefined') {
-      setPreloaderState(false);
-      setCards(getCurrentCards().reverse());
-    }
   }
 
   const handleSignupSubmit = async ({ name, email, password }) => {
@@ -211,28 +204,33 @@ function App() {
     }
   }
 
-  const handleBtnMore = () => {
-
+  const handleBtnMore = (count) => {
+    setCountRenderCards(count);
   }
 
-  const handleCardsRender = () => {
-    if (window.innerWidth > 1280) {
-      // console.log('Ширина больше 1280px');
-
-
+  const renderCards = () => {
+    if (typeof (localStorage.moviesFound) !== 'undefined') {
+      setPreloaderState(false);
+      handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
+      setShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
+      // setCards(getCurrentCards().reverse().slice(0, countRenderCards));
     }
-    if (window.innerWidth > 769 && window.innerWidth < 1280)
-      console.log('Ширина меньше 1280px');
-    if (window.innerWidth > 480 && window.innerWidth < 768)
-      console.log('Ширина меньше 768px');
-    if (window.innerWidth < 480)
-      console.log('Ширина меньше 480px');
+  }
+
+
+  const handleCardsRender = () => {
+    if (window.innerWidth >= 1280)
+      setCountRenderCards(3);
+    if (window.innerWidth > 480 && window.innerWidth < 1280)
+      setCountRenderCards(2)
+    if (window.innerWidth <= 480)
+      setCountRenderCards(1);
   }
 
   useEffect(() => {
     if (loggedIn) {
       getMovies();
-      renderCards();
+      handleCardsRender();
       getContent();
       getLikedMoviesApi();
       history.push('movies');
@@ -251,9 +249,14 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     if (jwt === 'true') {
       setLoggedIn(true);
-      window.addEventListener('resize', handleCardsRender);
+      window.addEventListener('resize', () => setTimeout(handleCardsRender, 500));
     }
   }, []);
+
+  useEffect(() => {
+    renderCards();
+    JSON.parse(localStorage.getItem('moviesFound')).length === countRenderCards && setBtnMoreState(false);
+  }, [countRenderCards]);
 
 
   return (
@@ -292,6 +295,8 @@ function App() {
             handleLike={handleLike}
             showMessage={isFindMessageOn}
             handleBtnMore={handleBtnMore}
+            countRenderCards={countRenderCards}
+            isBtnMoreOn={isBtnMoreOn}
           >
           </ProtectedRoute>
           <ProtectedRoute
