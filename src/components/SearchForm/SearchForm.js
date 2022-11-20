@@ -35,7 +35,6 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher,
     e.preventDefault();
     setPreloaderState(true);
     onSumbitSaved({ movie: inputDataSaved.movie });
-    // setInputDataSaved({ movie: '' });
   }
 
   useEffect(() => {

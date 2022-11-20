@@ -1,5 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useState, useEffect, useContext } from "react";
+
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Navigation from '../Navigation/Navigation.js';
 function Profile({ onOpenNavPanel, onSubmit, onSignOut, isRegIssue, onClose }) {

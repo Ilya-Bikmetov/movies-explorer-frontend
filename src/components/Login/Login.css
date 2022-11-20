@@ -65,6 +65,20 @@
   opacity: 0.6;
 }
 
+.profile-form__btn_disabled {
+  background-color: #dbd7d7;
+  pointer-events: none;
+}
+
+.input-container {
+  width: 100%;
+  position: relative;
+}
+
+.error {
+  margin: 0;
+}
+
 .profile-form__input-title {
   font-family: 'Inter';
   font-style: normal;
@@ -74,6 +88,10 @@
   margin: 20px 0 10px 0;
   align-self: flex-start;
 
+}
+
+.profile-form__input-title_bottom {
+  margin: 40px 0 10px 0;
 }
 
 .profile-form__submit-subtitle {
@@ -131,6 +149,7 @@
 
 .profile-form__message_error_active {
   display: block;
+  position: absolute;
 }
 
 .profile-form__message_error-profile_active {

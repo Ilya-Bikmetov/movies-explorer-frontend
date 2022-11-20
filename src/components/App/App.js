@@ -46,6 +46,7 @@ function App() {
     isRegSuccess && setRegSuccess(false);
     isRegIssue && setRegIssue(false);
   }
+
   const handleShortMoviesSwitcher = (state) => {
     if (state === true) {
       if (typeof (localStorage.moviesFound) !== 'undefined') {
@@ -53,6 +54,7 @@ function App() {
         setCards(shortMovieCards.slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
         setShortMoviesSwitcher(state);
+        handleCardsRender();
       }
     }
     else {
@@ -60,6 +62,7 @@ function App() {
         setCards(getCurrentCards().slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
         setShortMoviesSwitcher(state);
+        handleCardsRender();
       }
     }
   };
@@ -93,6 +96,7 @@ function App() {
     if (moviesFound.length > 0) {
       localStorage.setItem('moviesFound', JSON.stringify(moviesFound))
       setCards(moviesFound.slice(0, countRenderCards));
+      handleCardsRender();
     } else {
       setFindMessage({ state: true, message: 'Ничего не найдено' });
       setCards([]);
@@ -230,7 +234,6 @@ function App() {
         JSON.parse(localStorage.getItem('moviesFound')).length <= 1
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
-
       }
     }
   }
