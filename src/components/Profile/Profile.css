@@ -31,6 +31,11 @@
   background: transparent;
 }
 
+.profile-form__profile-subtitle_submit {
+  pointer-events: none;
+  opacity: .3;
+}
+
 .profile-form__title_profile {
   align-self: center;
   margin: 0 0 123px;

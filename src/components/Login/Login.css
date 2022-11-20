@@ -147,6 +147,10 @@
   margin: 10px 0 0 0;
 }
 
+.profile-form__message_profile {
+  top: 5px;
+}
+
 .profile-form__message_error_active {
   display: block;
   position: absolute;
@@ -155,11 +159,13 @@
 .profile-form__message_error-profile_active {
   display: block;
   margin: 20px auto 0;
+  position: absolute;
 }
 
 .profile-form__message_success_active {
   display: block;
   color: #058016;
+  position: absolute;
 }
 
 @media (min-width: 301px) and (max-width: 512px) {

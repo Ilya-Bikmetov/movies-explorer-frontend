@@ -54,7 +54,6 @@ function App() {
         setCards(shortMovieCards.slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
         setShortMoviesSwitcher(state);
-        handleCardsRender();
       }
     }
     else {
@@ -62,7 +61,6 @@ function App() {
         setCards(getCurrentCards().slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
         setShortMoviesSwitcher(state);
-        handleCardsRender();
       }
     }
   };
@@ -151,6 +149,7 @@ function App() {
     try {
       await MainApi.editProfile({ name, email });
       setCurrentUser({ name, email });
+      setRegSuccess(true);
     } catch (err) {
       setRegIssue(true);
       console.log(err);
@@ -341,6 +340,7 @@ function App() {
             onSubmit={handleEditProfile}
             onSignOut={handleSignout}
             onClose={closeNotices}
+            isRegSuccess={isRegSuccess}
             isRegIssue={isRegIssue}
           >
           </ProtectedRoute>

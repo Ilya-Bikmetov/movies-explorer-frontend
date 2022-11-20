@@ -35,7 +35,7 @@ function Register({ onSubmit, isRegSuccess, isRegIssue, onClose }) {
             }
           })}
         />
-        <p className="profile-form__message profile-form__message_error_active">{errors?.name && <span className="error">{errors?.name?.message || "Поле пароль необходимо заполнить"}</span>}</p>
+        <p className="profile-form__message profile-form__message_error_active">{errors?.name && <span className="error">{errors?.name?.message || "Поле имя необходимо заполнить"}</span>}</p>
       </div>
       <p className="profile-form__input-title profile-form__input-title_bottom">E-mail</p>
       <div className="input-container">
