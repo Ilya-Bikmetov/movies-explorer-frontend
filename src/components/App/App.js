@@ -56,26 +56,16 @@ function App() {
         setCards(shortMovieCards.slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
         setShortMoviesSwitcher(state);
-        if (window.innerWidth >= 1280)
-          shortMovieCards.length <= 12
-            ? setBtnMoreState(false)
-            : setBtnMoreState(true)
-        if (window.innerWidth > 480 && window.innerWidth < 1280)
-          shortMovieCards.length <= 8
-            ? setBtnMoreState(false)
-            : setBtnMoreState(true)
-        if (window.innerWidth <= 480)
-          shortMovieCards.length <= 5
-            ? setBtnMoreState(false)
-            : setBtnMoreState(true)
+        handleHideBtnMore(shortMovieCards);
       }
     }
     else {
       if (typeof (localStorage.searchField) !== 'undefined') {
-        setCards(getMoviesBySearchField().slice(0, countRenderCards));
+        const cardsRegular = getMoviesBySearchField()
+        setCards(cardsRegular.slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
         setShortMoviesSwitcher(state);
-
+        handleHideBtnMore(cardsRegular);
       }
     }
   };
@@ -219,6 +209,21 @@ function App() {
     setCountRenderCards(count);
   }
 
+  const handleHideBtnMore = (cardList) => {
+    if (window.innerWidth >= 1280)
+      cardList.length <= 12
+        ? setBtnMoreState(false)
+        : setBtnMoreState(true)
+    if (window.innerWidth > 480 && window.innerWidth < 1280)
+      cardList.length <= 8
+        ? setBtnMoreState(false)
+        : setBtnMoreState(true)
+    if (window.innerWidth <= 480)
+      cardList.length <= 5
+        ? setBtnMoreState(false)
+        : setBtnMoreState(true)
+  }
+
   const renderCards = () => {
     if (typeof (localStorage.searchField) !== 'undefined') {
       setPreloaderState(false);
@@ -231,7 +236,6 @@ function App() {
     if (window.innerWidth >= 1280) {
       setCountRenderCards(12);
       if (typeof (localStorage.searchField) !== 'undefined') {
-        // getMoviesBySearchField().length <= 3
         getMoviesBySearchField().length <= 12
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
@@ -240,7 +244,6 @@ function App() {
     if (window.innerWidth > 480 && window.innerWidth < 1280) {
       setCountRenderCards(8);
       if (typeof (localStorage.searchField) !== 'undefined') {
-        // getMoviesBySearchField().length <= 2
         getMoviesBySearchField().length <= 8
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
@@ -249,7 +252,6 @@ function App() {
     if (window.innerWidth <= 480) {
       setCountRenderCards(5);
       if (typeof (localStorage.searchField) !== 'undefined') {
-        // getMoviesBySearchField().length <= 1
         getMoviesBySearchField().length <= 5
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
