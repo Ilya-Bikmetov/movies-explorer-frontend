@@ -108,14 +108,19 @@ function App() {
 
   const findMovies = ({ movie }) => {
     setFindMessage(false);
-    localStorage.setItem('searchField', JSON.stringify(movie));
-    const moviesFound = getMoviesStorage().filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
-    if (moviesFound.length > 0) {
-      // localStorage.setItem('moviesFound', JSON.stringify(moviesFound))
-      setCards(moviesFound.slice(0, countRenderCards));
+    if (JSON.parse(localStorage.getItem('shortMoviesSwitcher'))) {
+      localStorage.setItem('searchField', JSON.stringify(movie));
+      handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
     } else {
-      setFindMessage({ state: true, message: 'Ничего не найдено' });
-      setCards([]);
+      localStorage.setItem('searchField', JSON.stringify(movie));
+      const moviesFound = getMoviesStorage().filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
+      if (moviesFound.length > 0) {
+        // localStorage.setItem('moviesFound', JSON.stringify(moviesFound))
+        setCards(moviesFound.slice(0, countRenderCards));
+      } else {
+        setFindMessage({ state: true, message: 'Ничего не найдено' });
+        setCards([]);
+      }
     }
     setPreloaderState(false);
   }
@@ -123,7 +128,6 @@ function App() {
   const findSavedMovies = ({ movie }) => {
     const moviesSavedFound = JSON.parse(localStorage.getItem('moviesLiked')).filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
     setCardsLiked(moviesSavedFound);
-    setPreloaderState(false);
   }
 
   const handleSignupSubmit = async ({ name, email, password }) => {
@@ -217,14 +221,16 @@ function App() {
 
   const handleBtnMore = (count) => {
     setCountRenderCards(count);
+
     // countRenderCards >= getMoviesBySearchField().length && setBtnMoreState(false);
   }
 
   const renderCards = () => {
-    if (typeof (localStorage.shortMoviesSwitcher) !== 'undefined') {
+    if (typeof (localStorage.searchField) !== 'undefined') {
       setPreloaderState(false);
       handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
       setShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
+      // countRenderCards >= getMoviesBySearchField().length && setBtnMoreState(false);
     }
   }
 
@@ -285,11 +291,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (typeof (localStorage.shortMoviesSwitcher) !== 'undefined') {
+    if (typeof (localStorage.searchField) !== 'undefined') {
       renderCards();
+      countRenderCards >= getMoviesBySearchField().length && setBtnMoreState(false);
       // JSON.parse(localStorage.getItem('moviesFound')).length === countRenderCards && setBtnMoreState(false);
       // countRenderCards > JSON.parse(localStorage.getItem('moviesFound')).length && setBtnMoreState(false);
-      countRenderCards >= getMoviesBySearchField().length && setBtnMoreState(false);
     }
   }, [countRenderCards]);
 
