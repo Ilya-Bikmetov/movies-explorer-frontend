@@ -50,14 +50,24 @@ function App() {
   }
 
   const handleShortMoviesSwitcher = (state) => {
-    // handleCardsRender();
     if (state === true) {
       if (typeof (localStorage.searchField) !== 'undefined') {
         const shortMovieCards = getMoviesBySearchField().filter((card) => card.duration <= 40);
         setCards(shortMovieCards.slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
         setShortMoviesSwitcher(state);
-
+        if (window.innerWidth >= 1280)
+          shortMovieCards.length <= 12
+            ? setBtnMoreState(false)
+            : setBtnMoreState(true)
+        if (window.innerWidth > 480 && window.innerWidth < 1280)
+          shortMovieCards.length <= 8
+            ? setBtnMoreState(false)
+            : setBtnMoreState(true)
+        if (window.innerWidth <= 480)
+          shortMovieCards.length <= 5
+            ? setBtnMoreState(false)
+            : setBtnMoreState(true)
       }
     }
     else {
@@ -207,8 +217,6 @@ function App() {
 
   const handleBtnMore = (count) => {
     setCountRenderCards(count);
-
-    // countRenderCards >= getMoviesBySearchField().length && setBtnMoreState(false);
   }
 
   const renderCards = () => {
@@ -216,7 +224,6 @@ function App() {
       setPreloaderState(false);
       handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
       setShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
-      // countRenderCards >= getMoviesBySearchField().length && setBtnMoreState(false);
     }
   }
 
@@ -249,33 +256,6 @@ function App() {
       }
     }
   }
-
-  // const handleCardsRenderSearch = () => {
-  //   if (window.innerWidth >= 1280) {
-  //     if (typeof (localStorage.searchField) !== 'undefined') {
-  //       // getMoviesBySearchField().length <= 3
-  //       getMoviesBySearchField().length <= 12
-  //         ? setBtnMoreState(false)
-  //         : setBtnMoreState(true)
-  //     }
-  //   }
-  //   if (window.innerWidth > 480 && window.innerWidth < 1280) {
-  //     if (typeof (localStorage.searchField) !== 'undefined') {
-  //       // getMoviesBySearchField().length <= 2
-  //       getMoviesBySearchField().length <= 8
-  //         ? setBtnMoreState(false)
-  //         : setBtnMoreState(true)
-  //     }
-  //   }
-  //   if (window.innerWidth <= 480) {
-  //     if (typeof (localStorage.searchField) !== 'undefined') {
-  //       // getMoviesBySearchField().length <= 1
-  //       getMoviesBySearchField().length <= 5
-  //         ? setBtnMoreState(false)
-  //         : setBtnMoreState(true)
-  //     }
-  //   }
-  // }
 
   useEffect(() => {
     if (loggedIn) {
