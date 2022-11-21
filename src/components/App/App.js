@@ -50,13 +50,14 @@ function App() {
   }
 
   const handleShortMoviesSwitcher = (state) => {
-    handleCardsRender();
+    // handleCardsRender();
     if (state === true) {
       if (typeof (localStorage.searchField) !== 'undefined') {
         const shortMovieCards = getMoviesBySearchField().filter((card) => card.duration <= 40);
         setCards(shortMovieCards.slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
         setShortMoviesSwitcher(state);
+
       }
     }
     else {
@@ -64,6 +65,7 @@ function App() {
         setCards(getMoviesBySearchField().slice(0, countRenderCards));
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(false));
         setShortMoviesSwitcher(state);
+
       }
     }
   };
@@ -247,6 +249,33 @@ function App() {
       }
     }
   }
+
+  // const handleCardsRenderSearch = () => {
+  //   if (window.innerWidth >= 1280) {
+  //     if (typeof (localStorage.searchField) !== 'undefined') {
+  //       // getMoviesBySearchField().length <= 3
+  //       getMoviesBySearchField().length <= 12
+  //         ? setBtnMoreState(false)
+  //         : setBtnMoreState(true)
+  //     }
+  //   }
+  //   if (window.innerWidth > 480 && window.innerWidth < 1280) {
+  //     if (typeof (localStorage.searchField) !== 'undefined') {
+  //       // getMoviesBySearchField().length <= 2
+  //       getMoviesBySearchField().length <= 8
+  //         ? setBtnMoreState(false)
+  //         : setBtnMoreState(true)
+  //     }
+  //   }
+  //   if (window.innerWidth <= 480) {
+  //     if (typeof (localStorage.searchField) !== 'undefined') {
+  //       // getMoviesBySearchField().length <= 1
+  //       getMoviesBySearchField().length <= 5
+  //         ? setBtnMoreState(false)
+  //         : setBtnMoreState(true)
+  //     }
+  //   }
+  // }
 
   useEffect(() => {
     if (loggedIn) {
