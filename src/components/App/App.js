@@ -42,7 +42,6 @@ function App() {
   const openNavPanel = () => setNavPanelOpen(true);
   const getMoviesStorage = () => JSON.parse(localStorage.getItem('movies'))
   const getSearchField = () => JSON.parse(localStorage.getItem('searchField'));
-  // const getCurrentCards = () => JSON.parse(localStorage.getItem('moviesFound'));
   const getCurrentLikedCards = () => JSON.parse(localStorage.getItem('moviesLiked'));
   const getMoviesBySearchField = () => getMoviesStorage().filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(getSearchField().replace(/ /g, '').toLowerCase()))
   const closeNotices = () => {
@@ -51,6 +50,7 @@ function App() {
   }
 
   const handleShortMoviesSwitcher = (state) => {
+    handleCardsRender();
     if (state === true) {
       if (typeof (localStorage.searchField) !== 'undefined') {
         const shortMovieCards = getMoviesBySearchField().filter((card) => card.duration <= 40);
@@ -101,9 +101,11 @@ function App() {
         setCards(moviesFound.slice(0, countRenderCards));
       } else {
         setFindMessage({ state: true, message: 'Ничего не найдено' });
+        setBtnMoreState(false);
         setCards([]);
       }
     }
+    handleCardsRender();
     setPreloaderState(false);
   }
 
@@ -220,7 +222,8 @@ function App() {
     if (window.innerWidth >= 1280) {
       setCountRenderCards(12);
       if (typeof (localStorage.searchField) !== 'undefined') {
-        getMoviesBySearchField().length <= 3
+        // getMoviesBySearchField().length <= 3
+        getMoviesBySearchField().length <= 12
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
       }
@@ -228,7 +231,8 @@ function App() {
     if (window.innerWidth > 480 && window.innerWidth < 1280) {
       setCountRenderCards(8);
       if (typeof (localStorage.searchField) !== 'undefined') {
-        getMoviesBySearchField().length <= 2
+        // getMoviesBySearchField().length <= 2
+        getMoviesBySearchField().length <= 8
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
       }
@@ -236,7 +240,8 @@ function App() {
     if (window.innerWidth <= 480) {
       setCountRenderCards(5);
       if (typeof (localStorage.searchField) !== 'undefined') {
-        getMoviesBySearchField().length <= 1
+        // getMoviesBySearchField().length <= 1
+        getMoviesBySearchField().length <= 5
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
       }
@@ -276,8 +281,6 @@ function App() {
     if (typeof (localStorage.searchField) !== 'undefined') {
       renderCards();
       countRenderCards >= getMoviesBySearchField().length && setBtnMoreState(false);
-      // JSON.parse(localStorage.getItem('moviesFound')).length === countRenderCards && setBtnMoreState(false);
-      // countRenderCards > JSON.parse(localStorage.getItem('moviesFound')).length && setBtnMoreState(false);
     }
   }, [countRenderCards]);
 
