@@ -1,8 +1,14 @@
 import Navigation from "../Navigation/Navigation.js";
 import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
-function MoviesSaved({ onOpen, onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher, cardsLiked, setCardsLiked, handleLike, onSumbitSaved, isSwitcherSavedOn, handleSwitcherSaved }) {
+function MoviesSaved({ onOpen, onSubmit, showMessage, cardsLiked, setCardsLiked, handleLike, onSumbitSaved, resetPage, isSwitcherSavedOn, handleSwitcherSaved }) {
+  const history = useHistory();
+  useEffect(() => {
+    resetPage();
+  }, [history])
   return (
     <>
       <Navigation
@@ -10,13 +16,11 @@ function MoviesSaved({ onOpen, onSubmit, setPreloaderState, isSwitcherOn, handle
       />
       <SearchForm
         onSubmit={onSubmit}
-        setPreloaderState={setPreloaderState}
-        // isSwitcherOn={isSwitcherOn}
-        // handleSwitcher={handleSwitcher}
         isSwitcherSavedOn={isSwitcherSavedOn}
         handleSwitcherSaved={handleSwitcherSaved}
         onSumbitSaved={onSumbitSaved}
       />
+      <h2 className={`movies-message ${showMessage.state && 'movies-message_active'}`}>{showMessage.message}</h2>
       <MoviesCardList
         cardsLiked={cardsLiked}
         setCardsLiked={setCardsLiked}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher, onSumbitSaved, isSwitcherSavedOn, handleSwitcherSaved }) {
+function SearchForm({ onSubmit, isSwitcherOn, handleSwitcher, onSumbitSaved, isSwitcherSavedOn, handleSwitcherSaved }) {
   const [inputData, setInputData] = useState({ movie: '' });
   const [inputDataSaved, setInputDataSaved] = useState({ movie: '' });
   const location = useLocation();
@@ -27,13 +27,11 @@ function SearchForm({ onSubmit, setPreloaderState, isSwitcherOn, handleSwitcher,
 
   const submitSearch = (e) => {
     e.preventDefault();
-    setPreloaderState(true);
     onSubmit({ movie: inputData.movie });
   }
 
   const submitSearchSaved = (e) => {
     e.preventDefault();
-    setPreloaderState(true);
     onSumbitSaved({ movie: inputDataSaved.movie });
   }
 

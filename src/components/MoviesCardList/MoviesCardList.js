@@ -39,7 +39,6 @@ function MoviesCardList({ cards, cardsLiked, setCardsLiked, isOn, handleLike, ha
         }
       </ul>
       <div className="movies__btn-container" style={
-
         location.pathname === "/saved-movies" || !isBtnMoreOn
           ? { display: "none" }
           : { display: "flex" }

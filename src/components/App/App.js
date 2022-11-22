@@ -2,7 +2,7 @@ import './App.css';
 import Header from '../Header/Header.js';
 import Footer from '../Footer/Footer.js';
 import { useState, useEffect } from 'react';
-import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import Promo from "../Promo/Promo.js";
 import AboutProject from "../AboutProject/AboutProject.js";
 import Techs from "../Techs/Techs.js";
@@ -24,7 +24,7 @@ import Navigation from '../Navigation/Navigation';
 function App() {
   const [cards, setCards] = useState([]);
   const [cardsLiked, setCardsLiked] = useState([]);
-  const [isPreloaderOn, setPreloaderState] = useState(true);
+  const [isPreloaderOn, setPreloaderState] = useState(false);
   const [isNavPanelOpen, setNavPanelOpen] = useState(false);
   const [isShortMoviesOn, setShortMoviesSwitcher] = useState(false);
   const [isShortMoviesSavedOn, setShortMoviesSavedSwitcher] = useState(false);
@@ -33,10 +33,10 @@ function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '', id: '' });
   const [loggedIn, setLoggedIn] = useState(false);
   const [isFindMessageOn, setFindMessage] = useState({ state: false, message: '' });
+  const [isFindSavedMessageOn, setFindSavedMessage] = useState({ state: false, message: '' });
   const [countRenderCards, setCountRenderCards] = useState(0);
-  const [isBtnMoreOn, setBtnMoreState] = useState(true);
+  const [isBtnMoreOn, setBtnMoreState] = useState(false);
   const history = useHistory();
-  const location = useLocation();
 
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
@@ -50,13 +50,15 @@ function App() {
   }
 
   const handleShortMoviesSwitcher = (state) => {
+    setFindMessage({ state: false, message: '' });
     if (state === true) {
       if (typeof (localStorage.searchField) !== 'undefined') {
         const shortMovieCards = getMoviesBySearchField().filter((card) => card.duration <= 40);
-        setCards(shortMovieCards.slice(0, countRenderCards));
+        shortMovieCards.length === 0 && setFindMessage({ state: true, message: 'Ничего не найдено' });
+        setCards(shortMovieCards.slice(0, countRenderCards))
+        handleHideBtnMore(shortMovieCards);
         localStorage.setItem('shortMoviesSwitcher', JSON.stringify(true));
         setShortMoviesSwitcher(state);
-        handleHideBtnMore(shortMovieCards);
       }
     }
     else {
@@ -71,6 +73,7 @@ function App() {
   };
 
   const handleShortMoviesSavedSwitcher = (state) => {
+    setFindSavedMessage({ state: false, message: '' });
     if (state === true) {
       const shortMovieLikedCards = getCurrentLikedCards().filter((card) => card.duration <= 40);
       setCardsLiked(shortMovieLikedCards);
@@ -92,6 +95,7 @@ function App() {
   }
 
   const findMovies = ({ movie }) => {
+    setPreloaderState(true);
     setFindMessage(false);
     if (JSON.parse(localStorage.getItem('shortMoviesSwitcher'))) {
       localStorage.setItem('searchField', JSON.stringify(movie));
@@ -112,8 +116,20 @@ function App() {
   }
 
   const findSavedMovies = ({ movie }) => {
-    const moviesSavedFound = JSON.parse(localStorage.getItem('moviesLiked')).filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
-    setCardsLiked(moviesSavedFound);
+    setPreloaderState(true);
+    setFindSavedMessage({ state: false, message: '' });
+    if (isShortMoviesSavedOn) {
+      const shortMovieLikedCards = getCurrentLikedCards().filter((card) => card.duration <= 40);
+      const shortMoviesLikedCardsBySearch = shortMovieLikedCards.filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
+      shortMoviesLikedCardsBySearch.length === 0 && setFindSavedMessage({ state: true, message: 'Ничего не найдено' });
+      setCardsLiked(shortMoviesLikedCardsBySearch);
+      setPreloaderState(false);
+    } else {
+      const moviesSavedFound = JSON.parse(localStorage.getItem('moviesLiked')).filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(movie.replace(/ /g, '').toLowerCase()));
+      moviesSavedFound.length === 0 && setFindSavedMessage({ state: true, message: 'Ничего не найдено' });
+      setCardsLiked(moviesSavedFound);
+      setPreloaderState(false);
+    }
   }
 
   const handleSignupSubmit = async ({ name, email, password }) => {
@@ -131,7 +147,6 @@ function App() {
       await MainApi.signin({ email, password });
       setLoggedIn(true);
       localStorage.setItem('jwt', true);
-      setPreloaderState(true);
     } catch (err) {
       console.log(err);
       setRegIssue(true);
@@ -233,6 +248,7 @@ function App() {
   }
 
   const handleCardsRender = () => {
+
     if (window.innerWidth >= 1280) {
       setCountRenderCards(12);
       if (typeof (localStorage.searchField) !== 'undefined') {
@@ -259,6 +275,12 @@ function App() {
     }
   }
 
+  const handleResetSavedMoviesPage = () => {
+    setFindSavedMessage({ state: false, message: '' });
+    setShortMoviesSavedSwitcher(false);
+    setCardsLiked(JSON.parse(localStorage.getItem('moviesLiked')).reverse());
+  }
+
   useEffect(() => {
     if (loggedIn) {
       getMovies();
@@ -272,13 +294,8 @@ function App() {
         getMoviesBySearchField().length === 0 && setFindMessage({ state: true, message: 'Ничего не найдено' })
       }
     }
-  }, [loggedIn, history]);
 
-  useEffect(() => {
-    if (location.pathname === "/saved-movies") {
-      setCardsLiked(JSON.parse(localStorage.getItem('moviesLiked')).reverse());
-    }
-  }, [location])
+  }, [loggedIn, history]);
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -348,8 +365,10 @@ function App() {
             handleSwitcherSaved={handleShortMoviesSavedSwitcher}
             handleLike={handleLike}
             cardsLiked={cardsLiked}
+            showMessage={isFindSavedMessageOn}
             setCardsLiked={setCardsLiked}
             onSumbitSaved={findSavedMovies}
+            resetPage={handleResetSavedMoviesPage}
           >
           </ProtectedRoute>
           <ProtectedRoute
