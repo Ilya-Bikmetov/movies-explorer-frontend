@@ -1,4 +1,4 @@
-# movies-explorer-frontend
+# movies-explorer-frontend Ilya Bikmetov
 
 
-https://disk.yandex.kz/d/ykAEhlS9nt4VEQ
+https://github.com/Ilya-Bikmetov/movies-explorer-frontend/pull/2
