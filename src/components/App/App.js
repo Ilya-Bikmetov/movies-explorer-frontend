@@ -293,6 +293,7 @@ function App() {
       if (typeof (localStorage.shortMoviesSwitcher) !== 'undefined') {
         getMoviesBySearchField().length === 0 && setFindMessage({ state: true, message: 'Ничего не найдено' })
       }
+      setBtnMoreState(false);
     }
 
   }, [loggedIn, history]);
