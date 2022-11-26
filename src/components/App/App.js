@@ -251,15 +251,15 @@ function App() {
 
   const handleHideBtnMore = (cardList) => {
     if (window.innerWidth >= 1280)
-      cardList.length <= 12
+      cardList.length <= countRenderCardsOver1280
         ? setBtnMoreState(false)
         : setBtnMoreState(true)
     if (window.innerWidth > 480 && window.innerWidth < 1280)
-      cardList.length <= 8
+      cardList.length <= countRenderCardsLess1280
         ? setBtnMoreState(false)
         : setBtnMoreState(true)
     if (window.innerWidth <= 480)
-      cardList.length <= 5
+      cardList.length <= countRenderCardsLess480
         ? setBtnMoreState(false)
         : setBtnMoreState(true)
   }
@@ -275,25 +275,25 @@ function App() {
   const handleCardsRender = () => {
 
     if (window.innerWidth >= 1280) {
-      setCountRenderCards(12);
+      setCountRenderCards(countRenderCardsOver1280);
       if (typeof (localStorage.searchField) !== 'undefined') {
-        getMoviesBySearchField().length <= 12
+        getMoviesBySearchField().length <= countRenderCardsOver1280
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
       }
     }
     if (window.innerWidth > 480 && window.innerWidth < 1280) {
-      setCountRenderCards(8);
+      setCountRenderCards(countRenderCardsLess1280);
       if (typeof (localStorage.searchField) !== 'undefined') {
-        getMoviesBySearchField().length <= 8
+        getMoviesBySearchField().length <= countRenderCardsLess1280
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
       }
     }
     if (window.innerWidth <= 480) {
-      setCountRenderCards(5);
+      setCountRenderCards(countRenderCardsLess480);
       if (typeof (localStorage.searchField) !== 'undefined') {
-        getMoviesBySearchField().length <= 5
+        getMoviesBySearchField().length <= countRenderCardsLess480
           ? setBtnMoreState(false)
           : setBtnMoreState(true)
       }
@@ -326,6 +326,7 @@ function App() {
   }, [loggedIn, history]);
 
   useEffect(() => {
+    loggedIn && history.push('movies');
     const jwt = localStorage.getItem('jwt');
     if (jwt === 'true') {
       checkContent();
