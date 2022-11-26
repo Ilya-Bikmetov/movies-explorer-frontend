@@ -3,6 +3,7 @@ import Header from '../Header/Header.js';
 import Footer from '../Footer/Footer.js';
 import { useState, useEffect } from 'react';
 import { Route, Switch, useHistory } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import Promo from "../Promo/Promo.js";
 import AboutProject from "../AboutProject/AboutProject.js";
 import Techs from "../Techs/Techs.js";
@@ -37,6 +38,7 @@ function App() {
   const [countRenderCards, setCountRenderCards] = useState(0);
   const [isBtnMoreOn, setBtnMoreState] = useState(false);
   const history = useHistory();
+  const location = useLocation();
 
   const closeNavPanel = () => setNavPanelOpen(false);
   const openNavPanel = () => setNavPanelOpen(true);
@@ -136,6 +138,7 @@ function App() {
     try {
       await MainApi.signup({ name, email, password });
       setRegSuccess(true);
+      setTimeout(() => handleSigninSubmit({ email, password }), 1000);
     } catch (err) {
       console.log(err);
       setRegIssue(true);
@@ -283,11 +286,13 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
+
+      (location.pathname === "/signin" || location.pathname === "/signup") && history.push('movies');
+
       getMovies();
       handleCardsRender();
       getContent();
       getLikedMoviesApi();
-      history.push('movies');
       handleShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
       setShortMoviesSwitcher(JSON.parse(localStorage.getItem('shortMoviesSwitcher')));
       if (typeof (localStorage.shortMoviesSwitcher) !== 'undefined') {

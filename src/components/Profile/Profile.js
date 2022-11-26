@@ -4,14 +4,13 @@ import { useForm } from "react-hook-form";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Navigation from '../Navigation/Navigation.js';
 function Profile({ onOpenNavPanel, onSubmit, onSignOut, isRegIssue, isRegSuccess, onClose }) {
-  const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ mode: "onChange" });
+  const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm({ mode: "onChange" });
   const history = useHistory();
   const currentUser = useContext(CurrentUserContext);
   const handleClearApiMesssages = () => onClose();
 
   const handleEditProfileSubmit = (data) => {
     onSubmit({ name: data.name, email: data.email });
-    reset();
   }
 
   const handleSignout = () => {
@@ -21,6 +20,11 @@ function Profile({ onOpenNavPanel, onSubmit, onSignOut, isRegIssue, isRegSuccess
   useEffect(() => {
     onClose();
   }, [history]);
+
+  useEffect(() => {
+    setValue('name', `${currentUser.name}`, { shouldValidate: true });
+    setValue('email', `${currentUser.email}`, { shouldValidate: true });
+  }, [setValue, currentUser.name, currentUser.email]);
 
   return (
     <>
@@ -69,11 +73,11 @@ function Profile({ onOpenNavPanel, onSubmit, onSignOut, isRegIssue, isRegSuccess
           </div>
 
         </div>
-          {
-            isRegIssue
-              ? <p className={`profile-form__message ${isRegIssue && 'profile-form__message_error-profile_active'}`}>Что-то пошло не так...</p>
-              : <p className={`profile-form__message ${isRegSuccess && 'profile-form__message_success_active'}`}>Профиль успешно изменен</p>
-          }
+        {
+          isRegIssue
+            ? <p className={`profile-form__message ${isRegIssue && 'profile-form__message_error-profile_active'}`}>Что-то пошло не так...</p>
+            : <p className={`profile-form__message ${isRegSuccess && 'profile-form__message_success_active'}`}>Профиль успешно изменен</p>
+        }
         <div className='profile-form__links-container'>
           <button
             disabled={!isValid}
