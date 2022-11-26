@@ -21,7 +21,7 @@ import * as MainApi from '../../utils/MainApi.js'
 import * as MoviesApi from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Navigation from '../Navigation/Navigation';
-import {countRenderCardsOver1280, countRenderCardsLess1280, countRenderCardsLess480} from '../../utils/constants.js';
+import { countRenderCardsOver1280, countRenderCardsLess1280, countRenderCardsLess480 } from '../../utils/constants.js';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -38,6 +38,7 @@ function App() {
   const [isFindSavedMessageOn, setFindSavedMessage] = useState({ state: false, message: '' });
   const [countRenderCards, setCountRenderCards] = useState(0);
   const [isBtnMoreOn, setBtnMoreState] = useState(false);
+  const [path, setPath] = useState('');
   const history = useHistory();
   const location = useLocation();
 
@@ -308,9 +309,8 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-
+      history.push(path);
       (location.pathname === "/signin" || location.pathname === "/signup") && history.push('movies');
-
       getMovies();
       handleCardsRender();
       getContent();
@@ -326,16 +326,15 @@ function App() {
   }, [loggedIn, history]);
 
   useEffect(() => {
-    loggedIn && history.push('movies');
+    setPath(location.pathname);
     const jwt = localStorage.getItem('jwt');
     if (jwt === 'true') {
       checkContent();
-      // setLoggedIn(true);
-      // window.addEventListener('resize', () => setTimeout(handleCardsRender, 500));
     }
   }, []);
 
   useEffect(() => {
+
     if (typeof (localStorage.searchField) !== 'undefined') {
       renderCards();
       countRenderCards >= getMoviesBySearchField().length && setBtnMoreState(false);

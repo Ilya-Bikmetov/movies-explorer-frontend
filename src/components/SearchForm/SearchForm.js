@@ -39,9 +39,7 @@ function SearchForm({ onSubmit, isSwitcherOn, handleSwitcher, onSumbitSaved, isS
     if (typeof (localStorage.searchField) !== 'undefined') {
       setInputData({ movie: JSON.parse(localStorage.getItem('searchField')) });
     }
-
   }, [])
-
 
   return (
     <section className="search-form">
@@ -77,7 +75,6 @@ function SearchForm({ onSubmit, isSwitcherOn, handleSwitcher, onSumbitSaved, isS
               : changeSwitchCondition
           }
             className={
-
               location.pathname === "/saved-movies"
                 ? `switcher ${isSwitcherSavedOn && 'switcher_on'}`
                 : `switcher ${isSwitcherOn && 'switcher_on'}`
