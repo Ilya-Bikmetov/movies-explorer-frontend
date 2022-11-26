@@ -21,6 +21,7 @@ import * as MainApi from '../../utils/MainApi.js'
 import * as MoviesApi from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Navigation from '../Navigation/Navigation';
+import {countRenderCardsOver1280, countRenderCardsLess1280, countRenderCardsLess480} from '../../utils/constants.js';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -46,6 +47,20 @@ function App() {
   const getSearchField = () => JSON.parse(localStorage.getItem('searchField'));
   const getCurrentLikedCards = () => JSON.parse(localStorage.getItem('moviesLiked'));
   const getMoviesBySearchField = () => getMoviesStorage().filter(obj => obj.nameRU.replace(/ /g, '').toLowerCase().includes(getSearchField().replace(/ /g, '').toLowerCase()))
+  const handleCookieDamaged = () => {
+    clearData();
+    console.log('Cookie поврежден или удален');
+  }
+
+  const clearData = () => {
+    setLoggedIn(false);
+    localStorage.clear();
+    setCards([]);
+    setCardsLiked([]);
+    setFindMessage({ state: false, message: '' });
+    setShortMoviesSwitcher(false);
+    window.removeEventListener('resize', handleCardsRender);
+  }
   const closeNotices = () => {
     isRegSuccess && setRegSuccess(false);
     isRegIssue && setRegIssue(false);
@@ -159,13 +174,7 @@ function App() {
   const handleSignout = async () => {
     try {
       await MainApi.clearJwtCookie();
-      setLoggedIn(false);
-      localStorage.clear();
-      setCards([]);
-      setCardsLiked([]);
-      setFindMessage({ state: false, message: '' });
-      setShortMoviesSwitcher(false);
-      window.removeEventListener('resize', handleCardsRender);
+      clearData();
     } catch (err) {
       console.log(err);
     }
@@ -191,6 +200,19 @@ function App() {
       }
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  const checkContent = async () => {
+    try {
+      const data = await MainApi.getContent();
+      if (data.user) {
+        setLoggedIn(true);
+        window.addEventListener('resize', () => setTimeout(handleCardsRender, 500));
+      }
+    } catch (err) {
+      console.log(err);
+      handleCookieDamaged();
     }
   }
 
@@ -306,8 +328,9 @@ function App() {
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt === 'true') {
-      setLoggedIn(true);
-      window.addEventListener('resize', () => setTimeout(handleCardsRender, 500));
+      checkContent();
+      // setLoggedIn(true);
+      // window.addEventListener('resize', () => setTimeout(handleCardsRender, 500));
     }
   }, []);
 
